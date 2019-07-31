@@ -1,6 +1,6 @@
-node: 
+node:  （cd /home/myProject/myNode）
 
-nohup command & npm start &    后台启动 node 且 不受Xshell 关闭 影响
+nohup command & npm start &    后台启动 node 且 不受Xshell 关闭 影响，但是*（通过在Xshell中输入exit来退出终端）
 -->对应：pkill node  关闭 node 服务
 
 nginx:  centos7.x使用
