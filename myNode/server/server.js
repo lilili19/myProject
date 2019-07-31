@@ -6,12 +6,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(3000);
 
+const v = '/api';
 //添加路由到应用上
 // app.use('/', require('../routes/fileDown'));
-app.use('/user', require('../routes/user'));
-app.use('/menu', require('../routes/menu'));
-app.use('/project', require('../routes/project'));
-app.use('/request', require('../routes/request'));
+app.use(v + '/user', require('../routes/user'));
+app.use(v + '/menu', require('../routes/menu'));
+app.use(v + '/project', require('../routes/project'));
+app.use(v + '/request', require('../routes/request'));
 
 app.use('/favicon.ico', function (req, res) {
     res.send();
