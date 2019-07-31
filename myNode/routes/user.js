@@ -238,7 +238,8 @@ router.get('/getUserList', async (req, res) => {
             list = list.filter(e => e.state == state);
         }
         queryData = {
-            count: count[0]['count(*)'],
+            // count: count[0]['count(*)'] - 1,
+            count: list.length,
             list: list.map(e => { e.creatTime = timeConversion(e.creatTime, 'YY-MM-DD HH:MM:SS'); return e })
         }
         queryData.list = queryData.list.map(e => {
@@ -246,7 +247,7 @@ router.get('/getUserList', async (req, res) => {
             return data;
         });
     }, {
-        pageIndex, pageSize
+        // pageIndex, pageSize
     } , key ? {
         userName: key
     } : null)

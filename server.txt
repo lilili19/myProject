@@ -4,7 +4,7 @@ nohup command & npm start &    后台启动 node 且 不受Xshell 关闭 影响
 -->对应：pkill node  关闭 node 服务
 
 nginx:  centos7.x使用
-
+yum install nginx 安装 ---目录： /etc/nginx/nginx.conf
 
 systemctl enable nginx.service  设置开机自启动
 systemctl disable nginx.service 停止开机自启动
