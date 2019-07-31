@@ -1,4 +1,4 @@
 module.exports = {
-    sqlName: 'mytest',
+    sqlName: 'user',
     sqlName2: 'business'
 }
