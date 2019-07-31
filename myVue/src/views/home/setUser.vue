@@ -18,6 +18,7 @@
                 ref="table"
                 border
                 style="width: 100%"
+                :height="tableHeight"
             >
                 <!-- <el-table-column type="selection" width="55"></el-table-column> -->
                 <el-table-column prop="index" label="排序" width="50"></el-table-column>
@@ -68,6 +69,7 @@
                     state: ''
                 },
                 tableData: [],
+                tableHeight: 150,
                 total: 0,
                 pageIndex: 1,
                 pageSize: 10,
@@ -112,6 +114,8 @@
 					callBack: (data) => {
                         const { count=0, list=[] } = data || {};
                         this.total = count;
+                        this.pageSize = count;
+                        this.tableHeight = list.length < 2 ? 150 : list.length > 10 ? 700 : (list.length * 65 + 65);
                         this.tableData = list.map((e, index) => {
                             const { creatTime, userName, state } = e;
                             return {

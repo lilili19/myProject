@@ -247,7 +247,7 @@ router.get('/getUserList', async (req, res) => {
             return data;
         });
     }, {
-        // pageIndex, pageSize
+        pageIndex, pageSize: 100000
     } , key ? {
         userName: key
     } : null)
