@@ -3,7 +3,7 @@ import qs from 'qs';
 
 const path = require('../../config/index');
 const { host1, host2 } = path;
-// import ElementUI from 'element-ui'
+import ElementUI from 'element-ui'
 // 返回信息提示处理
 const status = function ({ code, msg }) {
     ElementUI.Message.error(msg);
