@@ -35,7 +35,7 @@
 		>
 			<p style="display: flex;align-items: center;" v-if="obj.type !== 4">
 				<span>名称：</span>
-				<el-input style="flex:1;margin-left: 5px;" placeholder="请输入名称" v-model="obj.data" autofocus></el-input>
+				<el-input style="flex:1;margin-left: 5px;" placeholder="请输入名称" v-model="obj.data" autofocus v-if="obj.model"></el-input>
 			</p>
 			<p style="display: flex;align-items: center;" v-else>
 				<span v-html="obj.delContent"></span>

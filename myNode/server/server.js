@@ -6,15 +6,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(3000);
 
-const v = '/api';
+const { host } = require('../config');
 //添加路由到应用上
 // app.use('/', require('../routes/fileDown'));
-app.use(v + '/user', require('../routes/user'));
-app.use(v + '/menu', require('../routes/menu'));
-app.use(v + '/project', require('../routes/project'));
-app.use(v + '/request', require('../routes/request'));
+app.use(host + '/user', require('../routes/user'));
+app.use(host + '/menu', require('../routes/menu'));
+app.use(host + '/project', require('../routes/project'));
+app.use(host + '/request', require('../routes/request'));
 
-app.use('/favicon.ico', function (req, res) {
+app.use(host + '/favicon.ico', function (req, res) {
     res.send();
 });
 //404判断

@@ -1,4 +1,6 @@
+
 var mysql = require('mysql');
+var { mySqlPassword } = require('../config');
 class operationMySql {
     constructor(sqlName, map) {
         // this.map = map;
@@ -15,7 +17,7 @@ class operationMySql {
         this.connection = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : '123456',
+            password : mySqlPassword,
             database : sqlName,
             multipleStatements: true // 支持执行多条 sql 语句
         });
