@@ -15,7 +15,7 @@ module.exports = {
       assetsPublicPath: '/',
       proxyTable: {
         '/api': {    //将www.exaple.com印射为/apis
-            target: 'http://localhost:3000',  // 接口域名测试环境
+            target: 'http://localhost:3000/api',  // 接口域名测试环境
             ws: true,
             changeOrigin: true,  //是否跨域
             pathRewrite: {
