@@ -9,7 +9,8 @@ import SetUser from '../views/home/setUser'
 Vue.use(Router)
 
 export default new Router({
-    // mode: 'history',
+    mode: 'history',
+    base: 'web',
     routes: [
         {
             path: '/',
