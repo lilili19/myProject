@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<div class="left"><i class="el-icon-arrow-left"></i></div>
+		<div class="left"><i class="el-icon-arrow-left" @click="$router.back(-1)"></i></div>
 		<div class="cen">{{title}}</div>
 		<div class="left"></div>
 	</div>

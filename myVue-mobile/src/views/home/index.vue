@@ -89,6 +89,20 @@
 						userName: '我',
 						createTime: '2019-8-5 16:13',
 						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+					},
+					{
+						type: 2,
+						msg: '句话我说的第一句话我说的第一句话',
+						userName: '我',
+						createTime: '2019-8-5 16:13',
+						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+					},
+					{
+						type: 2,
+						msg: '句话我说的第一句话我说的第一句话',
+						userName: '我',
+						createTime: '2019-8-5 16:13',
+						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
 					}
 				]
 			}
@@ -128,15 +142,12 @@
 	.container {
 		width: 100%;
 		height: 100%;
-		position: relative;
+		padding: 46px 0 40px 0;
+		overflow: hidden;
 		.top {
 			width: 100%;
 			height: 100%;
-			position: absolute;
 			background-color: #f1f1f1;
-			padding: 46px 0 40px 0;
-			top: 0;
-			left: 0;
 			&>div {
 				width: 100%;
 				height: 100%;
@@ -148,6 +159,7 @@
 					width: 100%;
 					max-height: 100%;
 					overflow-y: auto;
+					-webkit-overflow-scrolling: touch;
 					background-color: #f1f1f1;
 					li {
 						width: 100%;
@@ -206,7 +218,7 @@
 		.bottom {
 			width: 100%;
 			height: 39px;
-			position: absolute;
+			position: fixed;
 			bottom: 0;
 			left: 0;
 			form {
