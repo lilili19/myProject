@@ -29,14 +29,14 @@
 				</ul>
 			</div>
 		</div>
-		<div class="bottom">
+		<div class="bottom" :style="{ bottom: isIphoneX ? '34px' : '' }">
 			<form>
 				<el-input
 					placeholder="请输入内容"
 					v-model="data"
 				>
 				</el-input>
-				<el-button :type="data ? 'primary' : ''" @click="send">发送</el-button>
+				<el-button :type="data ? 'primary' : ''" @click="send" @blur="blur">发送</el-button>
 			</form>
 		</div>
 	</div>
@@ -50,8 +50,10 @@
 		},
 		data() {
 			const { userName } = JSON.parse(sessionStorage.getItem('user')) || {};
+			const isIphoneX = sessionStorage.getItem('isIphoneX');
 			return {
 				userName,
+				isIphoneX,
 				loading: false,
 				data: '',
 				messageList: [
@@ -127,6 +129,9 @@
 			send() {
 				if(!this.data) return;
 				alert(this.data);
+			},
+			blur() {
+				window.scrollTo(0, document.documentElement.scrollTo);
 			}
 		},
 		mounted() {
