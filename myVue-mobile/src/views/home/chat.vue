@@ -44,7 +44,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 	export default {
 		components: {
-			Header
+			
 		},
 		data() {
 			const { userName } = JSON.parse(sessionStorage.getItem('user')) || {};
