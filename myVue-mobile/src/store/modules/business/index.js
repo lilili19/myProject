@@ -4,15 +4,7 @@ import actions from './actions'
 import mutations from './mutations'
  
 const state = {
-    menuList: [], // 菜单列表
-    selectMenu: [], //   当前选择菜单的脚标
-    search: { // 记录搜索条件状态
-        date: [],
-        method: '',
-        key: ''
-    },
-    // 记录当前进入详情的一组数据
-    toDetailObj: {}
+    userList: []
 }
  
 // 注册上面引入的各大模块
