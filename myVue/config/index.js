@@ -5,9 +5,9 @@
 const path = require('path');
 
 const host = 'http://47.106.161.65'
-// const env = 'dev';
+const env = 'dev';
 // const env = 'network';
-const env = 'app';
+// const env = 'app';
 
 module.exports = {
     dev: {

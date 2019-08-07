@@ -2,7 +2,7 @@ import { http } from '../../ajax'
 
 export default {
     async userLogin({commit}, {data, callBack}) {
-        const url = '/user/login';
+        const url = '/mobile/user/login';
         await http.get({url, data}, {
             success: (data) => {
                 callBack && callBack(data);
@@ -10,7 +10,7 @@ export default {
         })
     },
     async userRegister({commit}, {data, callBack}) {
-        const url = '/user/register';
+        const url = '/mobile/user/register';
         await http.get({url, data}, {
             success: (data) => {
                 callBack && callBack(data);
@@ -18,7 +18,7 @@ export default {
         })
     },
     async userUpdatePassword({commit}, {data, callBack}) {
-        const url = '/user/updatePassword';
+        const url = '/mobile/user/updatePassword';
         await http.post({url, data}, {
             success: (data) => {
                 callBack && callBack(data);
@@ -26,7 +26,7 @@ export default {
         })
     },
     async getUserList({commit}, {data, callBack}) {
-        const url = '/user/getUserList';
+        const url = '/mobile/user/getUserList';
         await http.get({url, data}, {
             success: (data) => {
                 callBack && callBack(data);

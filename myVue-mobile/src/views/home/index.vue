@@ -25,7 +25,21 @@
 			
 		},
 		mounted() {
-			
+			const { name } = this.$route;
+			switch(name) {
+				case 'message': 
+					this.routerIndex = 0;
+					this.title = '消息';
+				break;
+				case 'userList': 
+					this.routerIndex = 1;
+					this.title = '用户列表';
+				break;
+				case 'my': 
+					this.routerIndex = 2;
+					this.title = '我';
+				break;
+			}
 		},
 		watch: {
 			
@@ -37,6 +51,6 @@
 	.home {
 		width: 100%;
 		height: 100%;
-		padding: 46px 0 40px 0;
+		padding: 46px 0 58px 0;
 	}
 </style>

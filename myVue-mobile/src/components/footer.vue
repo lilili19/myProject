@@ -56,7 +56,8 @@
         left: 0;
         bottom: 0;
         display: flex;
-        border-top: 1px solid #ccc;
+        // border-top: 1px solid #ccc;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2),-1px -1px 5px rgba(0, 0, 0, 0.2);
         .router {
             flex: 1;
             display: flex;
