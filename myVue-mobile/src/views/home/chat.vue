@@ -5,12 +5,12 @@
 				<ul ref="ul">
 					<li v-for="(item,index) in messageList" :key="index">
 						<template v-if="item.type == 1"> 
-							<img :src="item.headImg" alt="">
+							<img :src="item.headImg" alt="" :onerror="item.headImg=defaultImg">
 							<div>
 								<p class="name">{{item.userName}}({{item.createTime}})</p>
 								<div class="content">
 									<span>{{item.msg}}</span>
-									<var></var>	
+									<var></var>
 								</div>
 							</div>
 						</template>
@@ -22,7 +22,7 @@
 									<var></var>	
 								</div>
 							</div>
-							<img :src="item.headImg" alt="" style="margin: 0px 0px 0 10px;">
+							<img :src="item.headImg" alt="" :onerror="item.headImg=defaultImg" style="margin: 0px 0px 0 10px;">
 						</template>
 					</li>
 				</ul>
@@ -42,6 +42,7 @@
 </template>
 <script>
 	import { mapActions, mapGetters } from 'vuex'
+	const { defaultImg } = require('../../../config/index');
 	export default {
 		components: {
 			
@@ -50,6 +51,7 @@
 			const { userName } = JSON.parse(sessionStorage.getItem('user')) || {};
 			const isIphoneX = sessionStorage.getItem('isIphoneX');
 			return {
+				defaultImg,
 				userName,
 				isIphoneX,
 				loading: false,
@@ -60,49 +62,49 @@
 						msg: '句话我说的第一句话我说的第一句话句句话我说的第一句话句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 2,
 						msg: '句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 1,
 						msg: '句话我说的第一句话我说的第一句话句话我说的第一句话句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 2,
 						msg: '句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 2,
 						msg: '句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 2,
 						msg: '句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					},
 					{
 						type: 2,
 						msg: '句话我说的第一句话我说的第一句话',
 						userName: '我',
 						createTime: '2019-8-5 16:13',
-						headImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
+						headImg: ''
 					}
 				]
 			}

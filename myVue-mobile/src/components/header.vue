@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div class="left">
-			<i class="el-icon-arrow-left" @click="$router.back(-1)" v-if="!leftHidden"></i>
+			<i class="el-icon-arrow-left" @click="back" v-if="!leftHidden"></i>
 		</div>
 		<div class="cen">{{title}}</div>
 		<div class="left"></div>
@@ -9,7 +9,7 @@
 </template>
 <script>
 	export default {
-        props: ['title', 'leftHidden'],
+        props: ['title', 'leftHidden', 'leftClick'],
 		data() {
 			return {
 				
@@ -19,7 +19,10 @@
 			
 		},
 		methods: {
-			
+			back() {
+				if(this.leftClick) this.leftClick();
+				else this.$router.back(-1);
+			}
 		},
 		mounted() {
 			

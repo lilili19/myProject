@@ -67,4 +67,7 @@
     ul,li {
         list-style: none;
     }
+    .el-message-box {
+        width: 80%;
+    }
 </style>

@@ -4,26 +4,36 @@
             <span>所有用户列表</span>
             <i class="el-icon-refresh-left" @click="getUserListAjax"></i>
         </div>
-        <ul v-if="user.length">
-            <li v-for="(item,index) in user" :key="index">
-                <img :src="item.headerImg" alt="" @error="errorImg(index)">
-                <span>{{item.userName}}</span>
+        <ul>
+            <li v-for="(item,index) in user" :key="index" @click="showUserMessage(item)">
+                <img :src="item.headerImg" alt="" :onerror="item.headerImg=defaultImg">
+                <span>{{item.nickName}}</span>
             </li>
         </ul>
+        <div class="message" v-if="userMessage">
+            <Header :leftClick="back" :title="(userMessage||{}).nickName" />
+            <UserMessage :message="userMessage||{}" />
+        </div>
 	</div>
 </template>
 <script>
+    import Header from '../../components/header'
+    import UserMessage from './components/userMessage'
     import { mapActions, mapGetters } from 'vuex'
+    const { defaultImg } = require('../../../config/index');
 	export default {
 		components: {
-            
+            Header,
+            UserMessage
 		},
 		data() {
 			const { userName } = JSON.parse(sessionStorage.getItem('user')) || {};
 			return {
+                defaultImg,
                 userName,
                 loading: false,
-                user: []
+                user: [],
+                userMessage: ''
 			}
         },
         computed: {
@@ -36,11 +46,6 @@
                 'setUserList',
                 'userList'
             ]),
-            errorImg(index) {
-                this.user[index].headerImg = 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg';
-                this.$set(this.user, 0, this.user[0]);
-                console.log(this.user)
-            },
             async getUserListAjax() {
                 const data = {};
                 this.loading = true;
@@ -48,9 +53,19 @@
                     data,
                     callBack: (data) => {
                         this.user = data || [];
+                        this.setUserList(this.user);
                     }
                 })
                 this.loading = false;
+            },
+            showUserMessage(item) {
+                this.userMessage = item;
+                window.history.pushState({}, null, "#");
+                window.addEventListener("popstate", this.back, false); 
+            },
+            back() {
+                this.userMessage = '';
+                window.removeEventListener("popstate", this.back, false); 
             }
 		},
 		mounted() {
@@ -60,7 +75,10 @@
 		},
 		watch: {
 			
-		}
+        },
+        beforeDestroy() {
+            window.removeEventListener("popstate", this.back, false);
+        }
 	}
 </script>
 
@@ -100,6 +118,15 @@
                     margin: 0 10px;
                 }
             }
+        }
+        .message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding-top: 46px;
+            z-index: 100000;
         }
 	}
 </style>

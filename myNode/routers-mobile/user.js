@@ -97,7 +97,15 @@ router.get('/login', async (req, res) => {
 // 注册
 router.get('/register', async (req, res) => {
     const userCreatIp = req.header('x-forwarded-for') || req.connection.remoteAddress;
-    const { userName, password } = req.query;
+    const { userName, password, nickName } = req.query;
+    if(!nickName) {
+        const resObj = {
+            data: null,
+            msg: '昵称不能为空',
+            code: 400
+        }
+        return res.send(JSON.stringify(resObj));
+    }
     // 检测用户名、密码不能为空
     if(cheakUser({ userName, password }, res)) return;
     /*
@@ -124,6 +132,7 @@ router.get('/register', async (req, res) => {
     // 注册
     if(!state) {
         await mySql.add({
+            nickName,
             userName,
             password,
             userCreatIp,
@@ -167,7 +176,10 @@ router.get('/getUserList', async (req, res) => {
         if(!type) {
             return state = '查询失败';
         }
-        queryData = data.filter(e => e.userName !== userName);
+        queryData = data.filter(e => e.userName !== userName).map(e => {
+            const { password , userCreatIp, creatTime, ...data } = e;
+            return data;
+        });
     });
     mySql.end();
     const resObj = {

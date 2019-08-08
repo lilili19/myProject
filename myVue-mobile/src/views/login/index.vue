@@ -1,12 +1,16 @@
 <template>
     <div class="login" v-loading="loading">
         <div class="login_form">
+            <el-input type="text" class="qxs-ic_user" placeholder="昵称" v-model="nickName" v-if="!state" />
             <el-input type="text" class="qxs-ic_user" placeholder="用户名" v-model="userName" />
-            <el-input type="text" class="qxs-ic_password" placeholder="密码" v-model="password" @keyup.enter.native="keydown" />
-            <el-button class="login_btn" @click="login" type="primary">登录</el-button>
+            <el-input type="password" class="qxs-ic_password" placeholder="密码" v-model="password" @keyup.enter.native="keydown" />
+            <el-button class="login_btn" @click="state ? login() : register()" type="primary">
+                {{state ? '登录' : '注册'}}
+            </el-button>
             <div style="margin-top: 10px">
-                <span style="color: #A9A9AB;cursor: pointer;" @click="register">注册账号</span>
-                <!-- <span style="float: right;color: #A9A9AB;cursor: pointer;" @click="updatePassword">修改密码</span> -->
+                <span style="color: #A9A9AB;cursor: pointer;" @click="nickName='';userName='';password='';state=!state">
+                    {{state ? '注册账号' : '已有账号?去登录'}}
+                </span>
             </div>
         </div>
     </div>
@@ -20,9 +24,11 @@
         name: 'login',
         data() {
             return {
+                nickName: '',
                 userName: '',
                 password: '',
-                loading: false
+                loading: false,
+                state: true // true 为登录， false 为 注册
             }
         },
         mounted() {
@@ -57,17 +63,21 @@
                 this.loading = false;
             },
             async register() {
+                if(!this.nickName) return this.$message.error('昵称不能为空');
                 if(!this.userName) return this.$message.error('用户名不能为空');
                 if(!this.password) return this.$message.error('密码不能为空');
                 const data = {
                     userName: this.userName,
-                    password: this.password
+                    password: this.password,
+                    nickName: this.nickName
                 }
                 this.loading = true;
                 await this.userRegister({
                     data,
                     callBack: (data) => {
                         this.$message.success('注册成功');
+                        this.nickName = '';
+                        this.state = !this.state;
                     }
                 })
                 this.loading = false;
@@ -105,13 +115,12 @@
     .login {
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .login_form {
         width: 300px;
-        margin: 0 auto;
-        padding-top: 200px;
-        // padding-left: 10%;
-        // padding-right: 10%;
     }
     .qxs-ic_user {
         background-size: 13px 15px;

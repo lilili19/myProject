@@ -24,14 +24,14 @@ module.exports = {
                 '^/api': ''   //需要rewrite的,
             }
         },
-        '/auth': {    //将www.exaple.com印射为/apis
-          target: 'http://10.10.3.78:30303',  // 接口域名
-          ws: true,
-          changeOrigin: true,  //是否跨域
-          pathRewrite: {
-              '^/auth': ''   //需要rewrite的,
-          }              
-        }
+        // '/auth': {    //将www.exaple.com印射为/apis
+        //   target: 'http://10.10.3.78:30303',  // 接口域名
+        //   ws: true,
+        //   changeOrigin: true,  //是否跨域
+        //   pathRewrite: {
+        //       '^/auth': ''   //需要rewrite的,
+        //   }              
+        // }
     },
 
     // Various Dev Server settings
@@ -97,5 +97,5 @@ module.exports = {
     },
 
     host1: env === 'app' ? (host + '/api') : '/api',
-    host2: env === 'dev' ? '/auth' : ''
+    defaultImg: 'http://file.qqtouxiang.com/gexing/2019-02-19/smalld1ef0dacde0eefd3a9b46a2926b00a471550568587.jpg'
 }
