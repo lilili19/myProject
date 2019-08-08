@@ -4,7 +4,7 @@ import actions from './actions'
 import mutations from './mutations'
  
 const state = {
-    
+    isReload: true
 }
  
 // 注册上面引入的各大模块

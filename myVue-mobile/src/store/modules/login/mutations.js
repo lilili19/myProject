@@ -1,6 +1,6 @@
 
 export default {
-    // changeBg(state, value) {
-    //     state.bg = value
-    // }
+    setIsReload(state, value) {
+        state.isReload = value
+    }
 }

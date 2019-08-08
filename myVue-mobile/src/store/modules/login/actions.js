@@ -33,7 +33,7 @@ export default {
             }
         })
     },
-    // changeBg({ commit }, value) {
-    //     commit('changeBg', value);
-    // }
+    setIsReload({ commit }, value) {
+        commit('setIsReload', value);
+    }
 }

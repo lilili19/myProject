@@ -1,7 +1,9 @@
 <template>
 	<div class="home">
 		<Header :title="title" leftHidden='1' />
-		<router-view/>
+		<keep-alive> 
+			<router-view />
+		</keep-alive>
 		<Footer :routerIndex='routerIndex' @routerLink="({index,name})=>{routerIndex=index;title=name}" />
 	</div>
 </template>

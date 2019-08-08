@@ -23,7 +23,7 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					window.location.href = "#/login"
+					this.$router.push('/login');
 					sessionStorage.removeItem('user');
 				}).catch(() => {
 					      

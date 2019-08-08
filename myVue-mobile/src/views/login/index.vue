@@ -1,5 +1,5 @@
 <template>
-    <div class="login" v-loading="loading">
+    <div class="login" v-loading="loading" v-if="getIsReload">
         <div class="login_form">
             <el-input type="text" class="qxs-ic_user" placeholder="昵称" v-model="nickName" v-if="!state" />
             <el-input type="text" class="qxs-ic_user" placeholder="用户名" v-model="userName" />
@@ -31,19 +31,25 @@
                 state: true // true 为登录， false 为 注册
             }
         },
+        created() {
+            if(!this.getIsReload) {
+                window.location.reload();
+            }
+        },
         mounted() {
             
         },
         computed: {
             ...mapGetters([
-                
+                'getIsReload'
             ])
         },
         methods: {
             ...mapActions([
                 'userLogin',
                 'userRegister',
-                'userUpdatePassword'
+                'userUpdatePassword',
+                'setIsReload'
             ]),
             async login() {
                 if(!this.userName) return this.$message.error('用户名不能为空');
@@ -57,6 +63,7 @@
                     data,
                     callBack: (data) => {
                         sessionStorage.setItem('user', JSON.stringify(data));
+                        this.setIsReload(false);
                         this.$router.push('/');
                     }
                 })

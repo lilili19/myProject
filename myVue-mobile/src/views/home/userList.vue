@@ -60,7 +60,7 @@
             },
             showUserMessage(item) {
                 this.userMessage = item;
-                window.history.pushState({}, null, "#");
+                window.history.pushState({}, null, "");
                 window.addEventListener("popstate", this.back, false); 
             },
             back() {

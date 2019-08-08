@@ -1,7 +1,7 @@
 
 
 export default {
-    // getBg(state) {
-    //     return state.bg;
-    // }
+    getIsReload(state) {
+        return state.isReload;
+    }
 }
