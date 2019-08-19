@@ -94,7 +94,7 @@ export const http = {
             success && success(data, msg)
         } else {
             if(code === 401) {
-                return window.location.href = '#/login';
+                return window.location.href = '/login';
             }
             if (error) {
                 error({ code, data, msg })
