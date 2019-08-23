@@ -10,7 +10,8 @@ import chat from '../views/home/chat'
 Vue.use(Router)
 
 export default new Router({
-    // mode: 'history',
+    mode: 'history',
+    base: 'mobile',
     routes: [
         {
             path: '/',

@@ -4,7 +4,7 @@ import qs from 'qs';
 const path = require('../../config/index');
 const { host1, host2 } = path;
 import ElementUI from 'element-ui'
-import router from "../router"
+import router from "../router";
 // 返回信息提示处理
 const status = function ({ code, msg }) {
     ElementUI.Message.error(msg);
@@ -95,6 +95,7 @@ export const http = {
             success && success(data, msg)
         } else {
             if(code === 401) {
+                sessionStorage.removeItem('user');
                 return router.push('/login');
             }
             if (error) {
