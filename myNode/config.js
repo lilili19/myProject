@@ -1,6 +1,6 @@
 
-// const path = 'dev';
-const path = '';
+const path = 'dev';
+// const path = '';
 
 module.exports = {
     sqlName: 'user', // 数据库表1
