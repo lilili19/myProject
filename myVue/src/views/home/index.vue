@@ -288,7 +288,7 @@
 			},
 			// 设置
 			setUser() {
-				this.setSelectMenu([]);
+				// this.setSelectMenu([]);
 				this.$router.push({
 					name: 'setUser'
 				});

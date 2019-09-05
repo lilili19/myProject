@@ -46,7 +46,7 @@
                 });
             },
             tab(index, index2) {
-                if(this.getSelectMenu[0] === index && this.getSelectMenu[1] === index2) return;
+                // if(this.getSelectMenu[0] === index && this.getSelectMenu[1] === index2) return;
                 this.$emit('changeSelectMenu', [index, index2]);
                 this.$emit('routerView', index, index2);
             },
