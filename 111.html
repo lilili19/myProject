@@ -1,38 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             list-style: none;
         }
+
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        body {
+            color: #333;
+        }
+
         .width1200 {
             width: 1200px;
             margin: 0 auto;
         }
+
         .li_problem {
             display: flex;
             justify-content: space-between;
         }
+
+        .li_problem_left {
+            flex: 1;
+        }
+
+        .li_problem_title {
+            font-size: 18px;
+            padding: 10px 0;
+        }
+
+        .li_problem_content {
+            font-size: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .li_problem_Reply {
+            width: 100%;
+            padding-top: 10px;
+        }
+
+        .li_problem_Reply>div {
+            border-left: 5px solid rgb(41, 135, 255);
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+
+        .li_problem_Reply li {
+            padding: 10px 10px 0 40px;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .li_problem_Reply li p {
+            padding: 10px 0;
+        }
+
+        .li_problem_Reply li span {
+            color: rgb(190, 190, 190);
+            margin-left: 10px;
+        }
+
+        .li_problem_right {
+            width: 250px;
+            margin-left: 30px;
+            border: 1px solid #ddd;
+            margin-top: 30px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .li_problem_right>span {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .li_problem_right ul {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .li_problem_right ul li {
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            background-color: white;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .li_problem_right ul li:hover {
+            color: rgb(41, 135, 255);
+        }
+
+        .li_problem_right .page {
+            display: flex;
+        }
+        .li_problem_right .page .active { 
+            color: red;
+        }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;height: 64px;background-color: #eee;">
 
     </div>
 
     <!-- 问题 -->
-    <div class="li_problem width1200">
+    <div class="li_problem width1200" id="app">
         <div class="li_problem_left">
-            <div class="li_problem_title">
-                
+            <p class="li_problem_title">标题</p>
+            <div style="font-size: 14px;">
+                创建人<span style="color: rgb(190, 190, 190);margin-left: 10px;">2020-10-11 10:10:10</span>
+            </div>
+            <div class="li_problem_content">
+                234243432342434323424343234243432342434323424343234243432342434323424343
+            </div>
+            <div class="li_problem_Reply">
+                <div>回复信息</div>
+                <ul>
+                    <li>
+                        回复人 <span>2020-06-09 14:55:54</span>
+                        <p>
+                            content
+                        </p>
+                    </li>
+                    <li>
+                        回复人 <span>2020-06-09 14:55:54</span>
+                        <p>
+                            content
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="li_problem_right"></div>
+        <div class="li_problem_right">
+            <span>更多问题</span>
+            <ul>
+                <li class="ellipsis" title="问题1问题1问题1问题1问题1问题1问题1问题1">
+                    <b>问题1问题1问题1问题1问题1问题1问题1问题1</b>
+                </li>
+                <li>
+                    <b>问题1</b>
+                </li>
+                <li>
+                    <b>问题1</b>
+                </li>
+            </ul>
+            <div class="page">
+                <button @click="prePage" :disabled="currentPage === 1">上一页</button>
+                <!--总页数小于8的-->
+                <div v-if="pageTotal <= showPageNo">
+                    <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                        :key="i">{{i}}</button>
+                </div>
+                <div v-else-if="currentPage < 4">
+                    <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                        :key="i">{{i}}</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                </div>
+                <div v-else-if="currentPage > pageTotal - 3">
+                    <button @click="changeCurrentPage(1)">1</button>
+                    <button :disabled="true">···</button>
+                    <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
+                        :class="{active:(i + (pageTotal - 4)) === currentPage}"
+                        :key="i">{{i + (pageTotal - 4)}}</button>
+                </div>
+                <div v-else>
+                    <button @click="changeCurrentPage(1)">1</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(currentPage - 1)">{{currentPage - 1}}</button>
+                    <button class="active">{{currentPage}}</button>
+                    <button @click="changeCurrentPage(currentPage + 1)">{{currentPage + 1}}</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                </div>
+                <!--下一页-->
+                <button @click="nextPage" :disabled="currentPage === pageTotal">下一页</button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                total: 129,
+                currentPage: 1,
+                pageSize: 5,
+                showPageNo: 6
+            },
+            computed: {
+                pageTotal() {
+                    const num = Math.floor(this.total / this.pageSize);
+                    if(this.total % this.pageSize) {
+                        return num + 1;
+                    }
+                    return num;
+                }
+            },
+            methods: {
+                prePage() {
+                    this.currentPage -= 1
+                    this.$emit('changeCurrentPage', this.currentPage)
+                },
+                nextPage() {
+                    this.currentPage += 1
+                    this.$emit('changeCurrentPage', this.currentPage)
+                },
+                changeCurrentPage(i) {
+                    this.currentPage = i
+                    this.$emit('changeCurrentPage', this.currentPage)
+                }
+            }
+        })
+    </script>
 </body>
+
 </html>
