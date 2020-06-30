@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        body {
+            color: #333;
+            background-color: #eee;
+            padding-top: 66px;
+        }
+
+        header {
+            min-width: 1200px;
+            width: 100%;
+            height: 64px;
+            background-color: rgb(43, 48, 59);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        header .header_con {
+            width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            font-size: 12px;
+            color: white;
+            font-size: 16px;
+        }
+
+        header .header_con img {
+            height: 23px;
+            margin-right: 20px;
+            margin-top: 2px;
+        }
+
+        header .header_con>div {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        header .header_con>div span {
+            margin: 0 20px;
+            cursor: pointer;
+        }
+
+        header .header_con>div span:hover {
+            color: rgb(14, 135, 255);
+        }
+        .banner {
+            width: 100%;
+            min-width: 1200px;
+            height: 385px;
+            overflow: hidden;
+            border-top: 2px solid white;
+        }
+
+        .banner .box {
+            position: relative;
+            height: 100%;
+        }
+
+        .banner .box:hover >.btn{
+            display: block;
+        }
+
+        .banner .box ul {
+            height: 100%;
+        }
+
+        .banner .box ul li {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: inherit;
+            color: #fff;
+            font-size: 80px;
+            text-align: center;
+            /* background: red; */
+            opacity: 0;
+            transition: all 1.5s;
+        }
+
+        .banner .box ul li img {
+            width: 100%;
+            /* height: 100%; */
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .banner .box ul li.active {
+            opacity: 1;
+            transition: all 1.5s;
+        }
+
+        .banner .status {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            text-align: Center;
+        }
+
+        .banner .status span {
+            display: inline-block;
+            height: 20px;
+            width: 15px;
+            margin: 0 3px;
+            background-color: #eeeeee;
+            /* border-radius: 10px; */
+            color: #333;
+            cursor: pointer;
+        }
+
+        .banner .status span.active {
+            color: #fff;
+            background-color: #86a7b1;
+        }
+
+        .banner .btn {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            display: none;
+        }
+
+        .banner .btn span {
+            display: block;
+            height: 80px;
+            width: 40px;
+            color: #fff;
+            line-height: 80px;
+            text-align: Center;
+            background-color: rgba(0, 0, 0, .7);
+            cursor: pointer;
+        }
+
+        .banner .btn span.prev {
+            float: left;
+        }
+
+        .banner .btn span.next {
+            float: right;
+        }
+
+      
+        .video {
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px 0;
+            /* box-shadow: 2px 5px 15px rgba(0, 0, 0, .15); */
+            border-bottom: 1px solid #ccc;
+        }
+
+        .video>div {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video p {
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .video p a {
+            position: absolute;
+            bottom: 0;
+            right: 20px;
+            font-size: 14px;
+            color: rgb(14, 135, 255);
+        }
+
+        .video ul {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .video ul li {
+            height: 300px;
+            border-radius: 3px;
+            background-color: white;
+            box-shadow: 2px 5px 15px rgba(0, 0, 0, .15);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            width: calc(33.33333% - 20px);
+            margin: 10px;
+            font-size: 14px;
+        }
+        .video ul li .coverImg {
+            flex: 1;
+            overflow: hidden;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .video ul li .coverImg img {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        .video ul li .coverImg var {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: url(./video/3.png);
+            cursor: pointer;
+            /* display: none; */
+        }
+
+        /* .video ul li .coverImg:hover var {
+            display: block;
+            animation: video .5s alternate;
+        } */
+
+        @keyframes video {
+            0% {
+                opacity: 0;
+                display: block;
+            }
+            100% {
+                opacity: 1;
+                display: block;
+            }
+        }
+
+        .video ul li span {
+            text-overflow: -o-ellipsis-lastline;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            margin: 15px 10px;
+            overflow: hidden;
+        }
+
+        footer {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+        }
+
+        footer .con {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        footer .con p {
+            text-align: center;
+        }
+
+        footer .con span { 
+            margin: 0 10px;
+        }
+
+        iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="header_con">
+                <img src="./images/logo@2x.png"></img>
+                <div>
+                    <div style="margin-left: 20px;">
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                    </div>
+                    <p v-if="!!userName">{{userName}}</p>
+                    <p v-else style="cursor: pointer;" @click="showLogin = true">请登录</p>
+                </div>
+            </div>
+        </header>
+        <!-- banner -->
+        <div class="banner">
+            <div class="box">
+                <ul>
+                    <li v-for="(item, index) in bannerList" :class="index === current ? 'active' : ''"
+                        @click="bannerClick(index, item)">
+                        <img :src="item.url" alt="">
+                    </li>
+                </ul>
+                <div class="status">
+                    <span v-for="(item, index) in bannerList" :class="index === current ? 'active' : ''"
+                        @mouseenter="changeBanner(index)" @mouseleave="startLoop">
+                        <!-- {{index + 1}} -->
+                    </span>
+                </div>
+                <div class="btn">
+                    <span class="prev" @click="prev" @mouseenter="stopLoop" @mouseleave="startLoop" style="background: url(./images/slider-arrow.png) -167px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
+                    <span class="next" @click="next" @mouseenter="stopLoop" @mouseleave="startLoop" style="background: url(./images/slider-arrow.png) -45px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 视频 -->
+        <div class="video">
+            <div>
+                <p>
+                    热门视频
+                    <a href="">更多视频</a>
+                </p>
+                <ul>
+                    <li v-for="(item, index) in videoList">
+                        <div class="coverImg">
+                            <img :src="item.coverImg" alt="">
+                            <var @click="beginVideo(item)"></var>
+                        </div>
+                        <span :title="item.title">{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 图片 -->
+        <div class="video">
+            <div>
+                <p>
+                    线上图片区域
+                    <a href="">更多图片</a>
+                </p>
+                <ul>
+                    <li v-for="(item, index) in videoList">
+                        <div class="coverImg">
+                            <img :src="item.coverImg" alt="">
+                            <var @click="beginVideo(item)"></var>
+                        </div>
+                        <span :title="item.title">{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 文章 -->
+        <div class="video">
+            <div>
+                <p>
+                    线上文章区域
+                    <a href="">更多文章</a>
+                </p>
+                <ul>
+                    <li v-for="(item, index) in videoList">
+                        <div class="coverImg">
+                            <img :src="item.coverImg" alt="">
+                            <var @click="beginVideo(item)"></var>
+                        </div>
+                        <span :title="item.title">{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 问题 -->
+        <div class="video">
+            <div>
+                <p>
+                    线上问题区域
+                    <a href="">更多问题</a>
+                </p>
+                <ul>
+                    <li v-for="(item, index) in videoList">
+                        <div class="coverImg">
+                            <img :src="item.coverImg" alt="">
+                            <var @click="beginVideo(item)"></var>
+                        </div>
+                        <span :title="item.title">{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 职业 -->
+        <div class="video">
+            <div>
+                <p>
+                    线上职业区域
+                    <a href="">更多职业</a>
+                </p>
+                <ul>
+                    <li v-for="(item, index) in videoList">
+                        <div class="coverImg">
+                            <img :src="item.coverImg" alt="">
+                            <var @click="beginVideo(item)"></var>
+                        </div>
+                        <span :title="item.title">{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <footer>
+            <div class="con">
+                <p style="font-size: 16px;padding: 20px;">
+                    <span>人才招聘</span>
+                    <span>联系我们</span>
+                    <span>讲师招募</span>
+                    <span>意见反馈</span>
+                    <span>友情链接</span>
+                </p>
+                <p>
+                    © 2020  京ICP备 12003892号-11 
+                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802030151" target="_blank" style="color:#93999F;font-size:12px;margin:0 5px !important;">
+                        <i style="display: inline-block;width: 16px; height: 16px;background: url(./images/beianicon.png) no-repeat 0 0;"></i>
+                        京公网安备11010802030151号
+                    </a> 营业执照
+                </p>
+            </div>
+        </footer>
+
+        <iframe src="./login.html" v-if="showLogin"></iframe>
+    </div>
+    
+    <script>
+        var user = JSON.parse(localStorage.getItem('user') || '{}');
+        const { userName } = user;
+        var app = new Vue({
+            el: '#app',
+            data: {
+                userName: userName || '', // 当前用户
+                showLogin: false, // 登录开关
+                verCode: '', //  验证码图片
+                current: 0, // 当前索引
+                timerId: null, // 清除循环标记
+                // 轮播数据
+                bannerList: [
+                    {
+                        url: 'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg'
+                    },
+                    {
+                        url: 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg'
+                    }
+                ],
+                // 视频列表
+                videoList: [
+                    {
+                        coverImg: './video/2.jpg',
+                        videoSrc: './video/1.mp4',
+                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
+                    },
+                    {
+                        coverImg: './video/2.jpg',
+                        videoSrc: './video/1.mp4',
+                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
+                    },
+                    {
+                        coverImg: './video/2.jpg',
+                        videoSrc: './video/1.mp4',
+                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
+                    },
+                    {
+                        coverImg: './video/2.jpg',
+                        videoSrc: './video/1.mp4',
+                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
+                    },
+                    {
+                        coverImg: './video/2.jpg',
+                        videoSrc: './video/1.mp4',
+                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
+                    }
+                ]
+            },
+            methods: {
+                get: function () {
+                    //发送get请求
+                    this.$http.get('/try/ajax/ajax_info.txt').then(function (res) {
+                        document.write(res.body);
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                },
+                // 播放视频
+                beginVideo(item) {
+
+                },
+                // 登录
+                login({ userName, password, verCode }) {
+                    debugger
+                },
+                // 获取验证码
+                getVerCode() {
+
+                },
+                // 鼠标移入状态圆点
+                changeBanner(index) {
+                    this.stopLoop();
+                    this.current = index;
+                },
+                // 鼠标点击banner内容
+                bannerClick(index, item) {
+                    
+                },
+                // 点击上一张按钮
+                prev() {
+                    if (this.current > 0) {
+                        this.current--;
+                    } else {
+                        this.current = this.bannerList.length - 1;
+                    }
+                },
+                // 点击下一张按钮
+                next() {
+                    if (this.current < this.bannerList.length - 1) {
+                        this.current++;
+                    } else {
+                        this.current = 0;
+                    }
+                },
+                // 鼠标移出继续循环播放
+                startLoop() {
+                    this.int(4000);
+                },
+                // 鼠标移入停止循环播放
+                stopLoop() {
+                    clearTimeout(this.timerId); // 清除循环
+                },
+                // 初始化加载
+                int(time) {
+                    this.timerId = setInterval(() => {
+                        this.next();
+                    }, time);
+                }
+            },
+            created () {
+                this.int(4000);
+            }
+        })
+    </script>
+</body>
+
+</html>

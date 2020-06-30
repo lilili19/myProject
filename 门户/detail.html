@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>详情页</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        body {
+            color: #333;
+            background-color: #eee;
+        }
+
+        header {
+            min-width: 1200px;
+            width: 100%;
+            height: 64px;
+            background-color: rgb(43, 48, 59);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        header .header_con {
+            width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            font-size: 12px;
+            color: white;
+            font-size: 16px;
+        }
+
+        header .header_con img {
+            height: 23px;
+            margin-right: 20px;
+            margin-top: 2px;
+        }
+
+        header .header_con>div {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        header .header_con>div span {
+            margin: 0 20px;
+            cursor: pointer;
+        }
+
+        header .header_con>div span:hover {
+            color: rgb(14, 135, 255);
+        }
+
+        iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 头部 -->
+        <header>
+            <div class="header_con">
+                <img src="./images/logo@2x.png"></img>
+                <div>
+                    <div style="margin-left: 20px;">
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                        <span>首页</span>
+                    </div>
+                    <p v-if="!!userName">{{userName}}</p>
+                    <p v-else style="cursor: pointer;" @click="showLogin = true">请登录</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- 问题解答 -->
+        
+
+        <iframe src="./login.html" v-if="showLogin"></iframe>
+    </div>
+    
+    <script>
+        var user = JSON.parse(localStorage.getItem('user') || '{}');
+        const { userName } = user;
+        var app = new Vue({
+            el: '#app',
+            data: {
+                userName: userName || '', // 当前用户
+                showLogin: false, // 登录开关
+            },
+            methods: {
+                // 登录
+                login({ userName, password, verCode }) {
+                    debugger
+                },
+                // 获取验证码
+                getVerCode() {
+
+                },
+            },
+            created () {
+                
+            }
+        })
+    </script>
+</body>
+
+</html>
