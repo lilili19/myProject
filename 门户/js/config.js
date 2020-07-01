@@ -1,36 +1,38 @@
+var env = 'test';
+
 var obj1 = {
     // 1、获取验证码
-    imgCode: '/json/data.json',
+    imgCode: '/json/imgCode.json',
     // 2、用户注册
-    register: '/json/data.json',
+    register: '/json/register.json',
     // 登录
-    login: '/json/data.json',
+    login: '/json/login.json',
     // 4、修改密码
-    changePwd: '/json/data.json',
+    changePwd: '/json/changePwd.json',
     // 5、模块列表
-    moduleList: '/json/data.json',
+    moduleList: '/json/moduleList.json',
     // 6、所属分类列表
-    typeList: '/json/data.json',
+    typeList: '/json/typeList.json',
     // 7、视频信息分页 
-    videoPages: '/json/data.json',
+    videoPages: '/json/videoPages.json',
     // 8、图片信息分页  
-    filePages: '/json/data.json',
+    filePages: '/json/filePages.json',
     // 9、文章信息分页 
-    subjectPages: '/json/data.json',
+    subjectPages: '/json/subjectPages.json',
     // 10、问题信息分页 
-    questionPages: '/json/data.json',
+    questionPages: '/json/questionPages.json',
     // 11、职位信息分页 
-    postionPages: '/json/data.json',
+    postionPages: '/json/postionPages.json',
     // 12、我的问题 
-    myQuestions: '/json/data.json',
+    myQuestions: '/json/myQuestions.json',
     // 13、问题创建 
-    save: '/json/data.json',
+    save: '/json/save.json',
     // 14、问题的回复记录 
-    pages: '/json/data.json',
+    pages: '/json/pages.json',
     // 15、用户应聘职位 
-    acceptPostion: '/json/data.json',
+    acceptPostion: '/json/acceptPostion.json',
     // 16、查询本人是否应聘过 
-    postionId: '/json/data.json'
+    postionId: '/json/postionId.json'
 }
 
 var obj2 = {
@@ -67,3 +69,5 @@ var obj2 = {
     // 16、查询本人是否应聘过 
     postionId: '/postionAccept/acceptPostion'
 }
+
+var urlAll = env === 'test' ? obj1 : obj2;
