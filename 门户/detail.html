@@ -20,6 +20,12 @@
             background-color: #eee;
         }
 
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         header {
             min-width: 1200px;
             width: 100%;
@@ -64,6 +70,109 @@
             color: rgb(14, 135, 255);
         }
 
+        .width1200 {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .li_problem {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 100px;
+        }
+
+        .li_problem_left {
+            flex: 1;
+        }
+
+        .li_problem_title {
+            font-size: 18px;
+            padding: 10px 0;
+        }
+
+        .li_problem_content {
+            font-size: 16px;
+            padding: 10px 0;
+        }
+
+        .li_problem_Reply {
+            width: 100%;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .li_problem_Reply>div {
+            border-left: 5px solid rgb(41, 135, 255);
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+
+        .li_problem_Reply li {
+            padding: 10px 10px 0 40px;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .li_problem_Reply li p {
+            padding: 10px 0;
+        }
+
+        .li_problem_Reply li span {
+            color: rgb(190, 190, 190);
+            margin-left: 10px;
+        }
+
+        .li_problem_right {
+            width: 250px;
+            margin-left: 30px;
+            /* border: 1px solid #ddd; */
+            margin-top: 13px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+        }
+
+        .li_problem_right>div>span {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .li_problem_right ul {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .li_problem_right ul li {
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            background-color: white;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .li_problem_right ul li:hover {
+            color: rgb(41, 135, 255);
+        }
+
+        .page {
+            display: flex;
+            justify-content: flex-end;
+            padding: 5px;
+        }
+        .page .active { 
+            color: rgb(41, 135, 255);
+        }
+        button {
+            border: 0;
+            /* background-color: white; */
+            margin: 0 2px;
+            cursor: pointer;
+            outline: none;
+        }
+
         iframe {
             position: fixed;
             top: 0;
@@ -95,7 +204,213 @@
             </div>
         </header>
 
-        <!-- 问题解答 -->
+        <!-- 问题 -->
+        <div class="li_problem width1200" v-if="type == 1">
+            <div class="li_problem_left">
+                <p class="li_problem_title">标题</p>
+                <div style="font-size: 14px;">
+                    创建人<span style="color: rgb(190, 190, 190);margin-left: 10px;">2020-10-11 10:10:10</span>
+                </div>
+                <div class="li_problem_content">
+                    234243432342434323424343234243432342434323424343234243432342434323424343
+                </div>
+                <div class="li_problem_Reply">
+                    <div>回复信息</div>
+                    <ul>
+                        <li>
+                            回复人 <span>2020-06-09 14:55:54</span>
+                            <p>
+                                content
+                            </p>
+                        </li>
+                        <li>
+                            回复人 <span>2020-06-09 14:55:54</span>
+                            <p>
+                                content
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="li_problem_right">
+                <div>
+                    <span>更多问题</span>
+                    <ul>
+                        <li class="ellipsis" title="问题1问题1问题1问题1问题1问题1问题1问题1">
+                            <b>问题1问题1问题1问题1问题1问题1问题1问题1</b>
+                        </li>
+                        <li>
+                            <b>问题1</b>
+                        </li>
+                        <li>
+                            <b>问题1</b>
+                        </li>
+                    </ul>
+                    <div class="page">
+                        <button @click="prePage" :disabled="currentPage === 1">上一页</button>
+                        <!--总页数小于8的-->
+                        <div v-if="pageTotal <= showPageNo">
+                            <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                        </div>
+                        <div v-else-if="currentPage < 4">
+                            <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <div v-else-if="currentPage > pageTotal - 3">
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
+                                :class="{active:(i + (pageTotal - 4)) === currentPage}"
+                                :key="i">{{i + (pageTotal - 4)}}</button>
+                        </div>
+                        <div v-else>
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(currentPage - 1)">{{currentPage - 1}}</button>
+                            <button class="active">{{currentPage}}</button>
+                            <button @click="changeCurrentPage(currentPage + 1)">{{currentPage + 1}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <!--下一页-->
+                        <button @click="nextPage" :disabled="currentPage === pageTotal">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文章 -->
+        <div class="li_problem width1200" v-if="type == 2">
+            <div class="li_problem_left">
+                <p class="li_problem_title">标题</p>
+                <div style="font-size: 14px;">
+                    创建人
+                    <span style="color: rgb(190, 190, 190);margin-left: 10px;">2020-10-11 10:10:10</span>
+                    <span style="margin-left: 10px;">所属模块</span>
+                    <span style="margin-left: 10px;">所属分类</span>
+                </div>
+                <div class="li_problem_content">
+                    234243432342434323424343234243432342434323424343234243432342434323424343
+                </div>
+            </div>
+            <div class="li_problem_right">
+                <div>
+                    <span>更多文章</span>
+                    <ul>
+                        <li class="ellipsis" title="文章1文章1文章1文章1文章1文章1文章1">
+                            <b>文章1文章1文章1文章1文章1文章1文章1</b>
+                        </li>
+                        <li>
+                            <b>文章</b>
+                        </li>
+                        <li>
+                            <b>文章</b>
+                        </li>
+                    </ul>
+                    <div class="page">
+                        <button @click="prePage" :disabled="currentPage === 1">上一页</button>
+                        <!--总页数小于8的-->
+                        <div v-if="pageTotal <= showPageNo">
+                            <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                        </div>
+                        <div v-else-if="currentPage < 4">
+                            <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <div v-else-if="currentPage > pageTotal - 3">
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
+                                :class="{active:(i + (pageTotal - 4)) === currentPage}"
+                                :key="i">{{i + (pageTotal - 4)}}</button>
+                        </div>
+                        <div v-else>
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(currentPage - 1)">{{currentPage - 1}}</button>
+                            <button class="active">{{currentPage}}</button>
+                            <button @click="changeCurrentPage(currentPage + 1)">{{currentPage + 1}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <!--下一页-->
+                        <button @click="nextPage" :disabled="currentPage === pageTotal">下一页</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- 招聘 -->
+        <div class="li_problem width1200" v-if="type == 3">
+            <div class="li_problem_left">
+                <p class="li_problem_title" style="display: flex;justify-content: space-between;">
+                    职业名称
+                    <button style="color: rgb(41, 135, 255);">应聘</button>
+                </p>
+                <div style="font-size: 14px;">
+                    公司名称
+                </div>
+                <div class="li_problem_content">
+                    职位描述
+                </div>
+            </div>
+            <div class="li_problem_right">
+                <div>
+                    <span>更多招聘信息</span>
+                    <ul>
+                        <li class="ellipsis" title="职位1职位1职位1职位1职位1职位1职位1职位1">
+                            <b>职位1职位1职位1职位1职位1职位1职位1职位1</b>
+                        </li>
+                        <li>
+                            <b>职位1</b>
+                        </li>
+                        <li>
+                            <b>职位1</b>
+                        </li>
+                    </ul>
+                    <div class="page">
+                        <button @click="prePage" :disabled="currentPage === 1">上一页</button>
+                        <!--总页数小于8的-->
+                        <div v-if="pageTotal <= showPageNo">
+                            <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                        </div>
+                        <div v-else-if="currentPage < 4">
+                            <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                                :key="i">{{i}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <div v-else-if="currentPage > pageTotal - 3">
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
+                                :class="{active:(i + (pageTotal - 4)) === currentPage}"
+                                :key="i">{{i + (pageTotal - 4)}}</button>
+                        </div>
+                        <div v-else>
+                            <button @click="changeCurrentPage(1)">1</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(currentPage - 1)">{{currentPage - 1}}</button>
+                            <button class="active">{{currentPage}}</button>
+                            <button @click="changeCurrentPage(currentPage + 1)">{{currentPage + 1}}</button>
+                            <button :disabled="true">···</button>
+                            <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                        </div>
+                        <!--下一页-->
+                        <button @click="nextPage" :disabled="currentPage === pageTotal">下一页</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
         
 
         <iframe src="./login.html" v-if="showLogin"></iframe>
@@ -109,6 +424,20 @@
             data: {
                 userName: userName || '', // 当前用户
                 showLogin: false, // 登录开关
+                type: 3,
+                total: 129,
+                currentPage: 1,
+                pageSize: 5,
+                showPageNo: 6
+            },
+            computed: {
+                pageTotal() {
+                    const num = Math.floor(this.total / this.pageSize);
+                    if(this.total % this.pageSize) {
+                        return num + 1;
+                    }
+                    return num;
+                }
             },
             methods: {
                 // 登录
@@ -119,6 +448,18 @@
                 getVerCode() {
 
                 },
+                prePage() {
+                    this.currentPage -= 1
+                    this.$emit('changeCurrentPage', this.currentPage)
+                },
+                nextPage() {
+                    this.currentPage += 1
+                    this.$emit('changeCurrentPage', this.currentPage)
+                },
+                changeCurrentPage(i) {
+                    this.currentPage = i
+                    this.$emit('changeCurrentPage', this.currentPage)
+                }
             },
             created () {
                 
