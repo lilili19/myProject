@@ -1,0 +1,60 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "total": 2,
+        "pages": 1,
+        "rows": [
+            {
+                "fileId": 16,
+                "moduleId": 9,
+                "moduleName": "首页轮播",
+                "title": "b111",
+                "fileName": "e2b8e22241091ad49631a4d4cc8459d2",
+                "fileType": "2",
+                "bucketName": null,
+                "cephKey": null,
+                "fileMd5": null,
+                "fileExt": "jpg",
+                "fileSize": null,
+                "fileUrl": "http://qb6ij5qnn.bkt.clouddn.com/41f18b17-effe-4a74-96e8-e48bd71e7f2a.jpg",
+                "thumbnailUrl": null,
+                "typeId": 22,
+                "typeName": "自然风景",
+                "status": "0",
+                "remark": "1ddd",
+                "upCount": 30,
+                "isDeleted": "0",
+                "createBy": 2,
+                "createTime": "2020-05-29 22:25:33",
+                "updateBy": 2,
+                "updateTime": "2020-06-20 10:23:13"
+            },
+            {
+                "fileId": 15,
+                "moduleId": 9,
+                "moduleName": "首页轮播",
+                "title": "a111",
+                "fileName": "dddd",
+                "fileType": "2",
+                "bucketName": null,
+                "cephKey": null,
+                "fileMd5": null,
+                "fileExt": "jpg",
+                "fileSize": null,
+                "fileUrl": "http://qb6ij5qnn.bkt.clouddn.com/41f18b17-effe-4a74-96e8-e48bd71e7f2a.jpg",
+                "thumbnailUrl": null,
+                "typeId": 23,
+                "typeName": "人物形象",
+                "status": "0",
+                "remark": "222",
+                "upCount": 20,
+                "isDeleted": "0",
+                "createBy": 2,
+                "createTime": "2020-05-29 22:24:05",
+                "updateBy": 2,
+                "updateTime": "2020-06-20 22:45:07"
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "acceptId": 3,
+        "userId": 12,
+        "postionId": 1,
+        "fileId": 26,
+        "status": "0",
+        "remark": null,
+        "isDeleted": "0",
+        "createBy": 12,
+        "createTime": "2020-06-21 08:59:00",
+        "updateBy": null,
+        "updateTime": "2020-06-21 08:59:00"
+    }
+}

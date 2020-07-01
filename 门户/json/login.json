@@ -1,0 +1,10 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "userId": 13,
+        "userName": "test06201",
+        "token": "ZTRmZGFiNjYtMzI3ZS00ZTcwLTg0M2EtOTU0Y2U1YTljZGZiMTU5MjY1NzkxMDk0NA==",
+        "systemCode": "005"
+    }
+}

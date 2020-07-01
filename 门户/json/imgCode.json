@@ -1,0 +1,8 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "captchaKey": "2d297f9939ef4c8ab97aa9da9ff600fc",  
+        "img": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyM"  //验证码图片
+    }
+}

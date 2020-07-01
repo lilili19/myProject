@@ -1,0 +1,35 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "total": 4,
+        "pages": 1,
+        "rows": [
+            {
+                "fileId": 23,
+                "moduleId": 13, 
+                "moduleName": "免费视频", 
+                "title": "333",
+                "fileName": "崔伟立-酒醉的蝴蝶(标清)",
+                "fileType": "1",
+                "bucketName": null, 
+                "cephKey": null,
+                "fileMd5": null,
+                "fileExt": "mp4", 
+                "fileSize": null,
+                "fileUrl": "http://qb6ij5qnn.bkt.clouddn.com/b70b2512-1362-4d5a-96bb-674b63134de9.mp4",  
+                "thumbnailUrl": "http://qb6ij5qnn.bkt.clouddn.com/41f18b17-effe-4a74-96e8-e48bd71e7f2a.jpg", 
+                "typeId": 20, 
+                "typeName": "JAVA", 
+                "status": "0",
+                "remark": "1313",
+                "upCount": 0,
+                "isDeleted": "0",
+                "createBy": 2,
+                "createTime": "2020-06-20 10:05:13",
+                "updateBy": null,
+                "updateTime": "2020-06-20 10:05:13"
+            }
+        ]
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "total": 4,
+        "pages": 1,
+        "rows": [
+            {
+                "postionId": 1,
+                "companyName": "阿里巴巴",
+                "postionName": "程序员",
+                "postionInfo": "", 
+                "status": "0",
+                "remark": "工资很高",
+                "isDeleted": "0",
+                "createBy": 2,
+                "createTime": "2020-05-24 18:35:17",
+                "updateBy": null,
+                "updateTime": "2020-05-24 18:35:17"
+            }
+        ]
+    }
+}

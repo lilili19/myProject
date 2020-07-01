@@ -1,0 +1,19 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": [
+        {
+            "moduleId": 9,
+            "moduleName": "首页轮播",
+            "orders": 1,
+            "businessType": "2",
+            "status": "0",
+            "remark": "首页轮播1",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:07:18",
+            "updateBy": null,
+            "updateTime": "2020-05-29 22:07:18"
+        }
+    ]
+}

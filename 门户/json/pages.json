@@ -1,0 +1,23 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": {
+        "total": 3,
+        "pages": 1,
+        "rows": [
+            {
+                "answerId": 1,
+                "answerContent": "阿斯顿撒旦撒旦撒阿斯顿撒旦撒", 
+                "questionId": 1, 
+                "status": "0",
+                "remark": null,
+                "isDeleted": "0",
+                "createBy": 2,
+                "createUserName": "admin",
+                "createTime": "2020-05-24 17:28:47",
+                "updateBy": null,
+                "updateTime": "2020-06-14 20:34:18"
+            }
+        ]
+    }
+}

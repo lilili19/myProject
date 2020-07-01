@@ -1,0 +1,18 @@
+{
+    "code": "200",
+    "message": "成功",
+    "data": [
+        {
+            "questionId": 3,
+            "questionName": "string", 
+            "questionContent": "string", 
+            "status": "1",   
+            "remark": null,
+            "isDeleted": "0",
+            "createBy": 12,
+            "createTime": "2020-06-21 08:26:58",
+            "updateBy": null,
+            "updateTime": "2020-06-21 08:26:58"
+        }
+    ]
+}

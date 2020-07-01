@@ -12,7 +12,7 @@ var obj1 = {
     // 6、所属分类列表
     typeList: '/json/data.json',
     // 7、视频信息分页 
-    filePages: '/json/data.json',
+    videoPages: '/json/data.json',
     // 8、图片信息分页  
     filePages: '/json/data.json',
     // 9、文章信息分页 
@@ -47,7 +47,7 @@ var obj2 = {
     // 6、所属分类列表
     typeList: '/type/list/1',
     // 7、视频信息分页 
-    filePages: '/open/filePages',
+    videoPages: '/open/videoPages',
     // 8、图片信息分页  
     filePages: '/open/filePages',
     // 9、文章信息分页 
