@@ -14,6 +14,97 @@
             "createTime": "2020-05-29 22:07:18",
             "updateBy": null,
             "updateTime": "2020-05-29 22:07:18"
+        },
+        {
+            "moduleId": 10,
+            "moduleName": "教师团队",
+            "orders": 2,
+            "businessType": "2",
+            "status": "0",
+            "remark": "教师团队2",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:08:54",
+            "updateBy": 2,
+            "updateTime": "2020-05-29 22:11:14"
+        },
+        {
+            "moduleId": 11,
+            "moduleName": "企业文化",
+            "orders": 3,
+            "businessType": "2",
+            "status": "0",
+            "remark": "企业文化3",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:09:13",
+            "updateBy": 2,
+            "updateTime": "2020-05-29 22:11:19"
+        },
+        {
+            "moduleId": 12,
+            "moduleName": "团队建设",
+            "orders": 4,
+            "businessType": "2",
+            "status": "0",
+            "remark": "团队建设4",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:09:40",
+            "updateBy": 2,
+            "updateTime": "2020-05-29 22:11:24"
+        },
+        {
+            "moduleId": 13,
+            "moduleName": "免费视频",
+            "orders": 5,
+            "businessType": "1",
+            "status": "0",
+            "remark": "免费视频5",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:10:14",
+            "updateBy": 2,
+            "updateTime": "2020-05-29 22:11:28"
+        },
+        {
+            "moduleId": 14,
+            "moduleName": "技术文章",
+            "orders": 6,
+            "businessType": "3",
+            "status": "0",
+            "remark": "技术文章6",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:10:47",
+            "updateBy": 2,
+            "updateTime": "2020-05-29 22:11:33"
+        },
+        {
+            "moduleId": 15,
+            "moduleName": "问题解答",
+            "orders": 7,
+            "businessType": "4",
+            "status": "0",
+            "remark": "问题解答7",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:11:08",
+            "updateBy": null,
+            "updateTime": "2020-05-29 22:11:08"
+        },
+        {
+            "moduleId": 16,
+            "moduleName": "招聘信息",
+            "orders": 8,
+            "businessType": "5",
+            "status": "0",
+            "remark": "招聘信息8",
+            "isDeleted": "0",
+            "createBy": 2,
+            "createTime": "2020-05-29 22:12:03",
+            "updateBy": null,
+            "updateTime": "2020-05-29 22:12:03"
         }
     ]
 }

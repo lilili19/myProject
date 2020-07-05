@@ -931,12 +931,32 @@
                                 autocomplete="off">
                             <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入密码</p>
                         </div>
+                        <!-- 手机号 -->
+                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;"> 
+                            <a href="javascript:void(0)" hidefocus="true"
+                            class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
+                            type="text" name="text" data-validate="require-text"
+                            class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入手机号" maxlength="20" checked="3"
+                            autocomplete="off">
+                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入手机号</p>
+                        </div>
+                        <!-- 邮箱 -->
+                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;"> 
+                            <a href="javascript:void(0)" hidefocus="true"
+                            class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
+                            type="text" name="text" data-validate="require-text"
+                            class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入邮箱" maxlength="20" checked="4"
+                            autocomplete="off">
+                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入邮箱</p>
+                        </div>
                         <!-- 验证码 -->
                         <div class="rlf-group clearfix form-control js-verify-row" style="margin-bottom: 15px;"> 
                             <input
                                 type="text" name="verify" class="ipt ipt-verify l" data-validate="require-string"
-                                data-callback="checkverity" maxlength="4" data-minlength="4" placeholder="请输入验证码" checked="3"> 
-                            <a href="javascript:void(0)" hidefocus="true" class="verify-img-wrap js-verify-refresh"></a> 
+                                data-callback="checkverity" maxlength="4" data-minlength="4" placeholder="请输入验证码" checked="5"> 
+                            <a href="javascript:void(0)" hidefocus="true" class="verify-img-wrap js-verify-refresh">
+                                <img src="" alt="" verSrc style="width: 100%;height: 100%;" onclick="setCerCode()">
+                            </a> 
                             <a href="javascript:void(0)" hidefocus="true" class="icon-refresh js-verify-refresh"></a>
                             <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入正确验证码</p>
                         </div>
@@ -945,6 +965,7 @@
                         </div>
                         <div class="rlf-group clearfix"> <input type="button" value="登录" hidefocus="true"
                                 class="moco-btn moco-btn-red moco-btn-lg btn-full xa-login" onclick="login()" login> </div>
+                        <div loginError style="color: red;"></div>
                     </form>
                 </div>
             </div>
@@ -958,7 +979,7 @@
         }
 
         document.onclick = function() {
-            close()
+            // close()
         }
         // 登录注册切换
         function loginRe(type) {
@@ -967,24 +988,49 @@
             span[1].className = '';
             span[type].className = 'active-title'; 
             document.querySelector('[login]').value = span[type].innerHTML;
-            if(type == 0) document.querySelector('[findPassword]').style.display = 'block';
-            else document.querySelector('[findPassword]').style.display = 'none';
-            
+            if(type == 0) {
+                document.querySelector('[findPassword]').style.display = 'block';
+                document.querySelector('[checked="3"]').parentNode.style.display = 'none';
+                document.querySelector('[checked="4"]').parentNode.style.display = 'none';
+                document.querySelector('[checked="5"]').parentNode.style.display = 'block';
+            }
+            else {
+                document.querySelector('[findPassword]').style.display = 'none';
+                document.querySelector('[checked="3"]').parentNode.style.display = 'block';
+                document.querySelector('[checked="4"]').parentNode.style.display = 'block';
+                document.querySelector('[checked="5"]').parentNode.style.display = 'none';
+            }
         }
         var form = document.getElementById('signup-form');
         var checked = form.querySelectorAll('[checked]');
         function login() {
+            document.querySelector('[loginError]').innerHTML = '';
             for (let index = 0; index < checked.length; index++) {
                 const element = checked[index];
-                if(!element.value) return element.parentNode.querySelector('p').style.display = 'block';
+                if(!element.value && element.parentNode.style.display !== 'none') return element.parentNode.querySelector('p').style.display = 'block';
                 else element.parentNode.querySelector('p').style.display = 'none';
             }
             window.parent.app.login({ 
                 userName: checked[0].value, 
                 password: checked[1].value, 
-                verCode: checked[2].value 
+                captchaCode: checked[4].value,
+                email: checked[2].value,
+                mobile: checked[3].value,
+                type: document.querySelector('[login]').value === document.querySelector('.rl-modal-header').querySelectorAll('span')[0].innerHTML ? 0 : 1
+            }, function(error) {
+                document.querySelector('[loginError]').innerHTML = error;
+                setCerCode();
             });
         }
+        // 设置验证码
+        function setCerCode() {
+            window.parent.app.getVerCode(function(verCode) {
+                const { captchaKey, img } = verCode;
+                document.querySelector('[verSrc]').src = img || '';
+            })
+        }
+        setCerCode()
+       
     </script>
 </body>
 

@@ -1,4 +1,7 @@
-var env = 'test';
+// var env = 'test';
+var env = '';
+
+var host = 'http://47.106.161.65';
 
 var obj1 = {
     // 1、获取验证码
@@ -37,37 +40,44 @@ var obj1 = {
 
 var obj2 = {
     // 1、获取验证码
-    imgCode: '/user/imgCode',
+    imgCode: host + '/user/imgCode',
     // 2、用户注册
-    register: '/open/register',
+    register: host + '/open/register',
     // 登录
-    login: '/user/login',
+    login: host + '/user/login',
     // 4、修改密码
-    changePwd: '/user/changePwd',
+    changePwd: host + '/user/changePwd',
     // 5、模块列表
-    moduleList: '/open/moduleList',
+    moduleList: host + '/open/moduleList',
     // 6、所属分类列表
-    typeList: '/type/list/1',
+    typeList: host + '/type/list/1',
     // 7、视频信息分页 
-    videoPages: '/open/videoPages',
+    videoPages: host + '/open/videoPages',
     // 8、图片信息分页  
-    filePages: '/open/filePages',
+    filePages: host + '/open/filePages',
     // 9、文章信息分页 
-    subjectPages: '/open/subjectPages',
+    subjectPages: host + '/open/subjectPages',
     // 10、问题信息分页 
-    questionPages: '/open/questionPages',
+    questionPages: host + '/open/questionPages',
     // 11、职位信息分页 
-    postionPages: '/open/postionPages',
+    postionPages: host + '/open/postionPages',
     // 12、我的问题 
-    myQuestions: '/question/myQuestions',
+    myQuestions: host + '/question/myQuestions',
     // 13、问题创建 
-    save: '/question/save',
+    save: host + '/question/save',
     // 14、问题的回复记录 
-    pages: '/questionAnswer/pages',
+    pages: host + '/questionAnswer/pages',
     // 15、用户应聘职位 
-    acceptPostion: '/postionAccept/acceptPostion',
+    acceptPostion: host + '/postionAccept/acceptPostion',
     // 16、查询本人是否应聘过 
-    postionId: '/postionAccept/acceptPostion'
+    postionId: host + '/postionAccept/acceptPostion'
 }
 
+
 var urlAll = env === 'test' ? obj1 : obj2;
+
+function ajaxHttp() {
+    var user = JSON.parse(localStorage.getItem('user') || '{}');
+    const { token } = user;
+    Vue.http.headers.common['token'] = token;
+}

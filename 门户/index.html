@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>主页</title>
+    <link rel="stylesheet" href="./css/header.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="./js/config.js"></script>
     <style>
         * {
             margin: 0;
@@ -19,50 +21,6 @@
             color: #333;
             background-color: #eee;
             padding-top: 66px;
-        }
-
-        header {
-            min-width: 1200px;
-            width: 100%;
-            height: 64px;
-            background-color: rgb(43, 48, 59);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 99;
-        }
-
-        header .header_con {
-            width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-            font-size: 12px;
-            color: white;
-            font-size: 16px;
-        }
-
-        header .header_con img {
-            height: 23px;
-            margin-right: 20px;
-            margin-top: 2px;
-        }
-
-        header .header_con>div {
-            display: flex;
-            flex: 1;
-            justify-content: space-between;
-        }
-
-        header .header_con>div span {
-            margin: 0 20px;
-            cursor: pointer;
-        }
-
-        header .header_con>div span:hover {
-            color: rgb(14, 135, 255);
         }
         .banner {
             width: 100%;
@@ -79,6 +37,18 @@
 
         .banner .box:hover >.btn{
             display: block;
+            animation: show .5s;
+        }
+
+        @keyframes show {
+            0% {
+                display: block;
+                opacity: 0;
+            }
+            100% {
+                display: block;
+                opacity: 1;
+            }
         }
 
         .banner .box ul {
@@ -256,7 +226,7 @@
             }
         }
 
-        .video ul li span {
+        .video ul li .reSpan {
             text-overflow: -o-ellipsis-lastline;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -298,6 +268,24 @@
             height: 100%;
             z-index: 1000;
         }
+        .video .article {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .video .article li {
+            background-color: white;
+            box-shadow: 2px 5px 15px rgba(0, 0, 0, .15);
+            border-radius: 5px;
+            width: 48%;
+            margin-bottom: 10px;
+            height: auto;
+            cursor: pointer;
+        }
+        .video .article li p {
+            text-align: left;
+            max-height: 200px;
+        }
     </style>
 </head>
 
@@ -307,29 +295,34 @@
             <div class="header_con">
                 <img src="./images/logo@2x.png"></img>
                 <div>
-                    <div style="margin-left: 20px;">
-                        <span>首页</span>
-                        <span>首页</span>
-                        <span>首页</span>
-                        <span>首页</span>
-                        <span>首页</span>
+                    <div class="header_con_center">
+                        <p>
+                            <span v-for="(item, index) in moduleList.slice(0, 6)" :class="{ activeSelect: headerIndex === index }" @click="positionClick(index)">{{item.moduleName}}</span>
+                        </p>
+                        <p header_con_t v-if="moduleList.length > 6">
+                            <span v-for="(item, index) in moduleList.slice(6, moduleList.length)" :class="{ activeSelect: headerIndex === index + 6 }" @click="positionClick(index + 6)">{{item.moduleName}}</span>
+                        </p>
                     </div>
-                    <p v-if="!!userName">{{userName}}</p>
-                    <p v-else style="cursor: pointer;" @click="showLogin = true">请登录</p>
+                    <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">{{userName}}</p>
+                    <p v-else style="cursor: pointer;" @click="showLogin = true">
+                        请登录
+                    </p>
                 </div>
+                <div class="loginOut" v-if="isLoginOut" @click="loginOut" style="height: auto;">退出登录</div>
             </div>
         </header>
-        <!-- banner -->
-        <div class="banner">
-            <div class="box">
+
+        <div v-for="(item, index) in moduleList" :class="item.businessType == 2 && item.orders == 1 ? 'banner' : 'video'" ref="box">
+            <!-- banner -->
+            <div class="box" v-if="item.businessType == 2 && item.orders == 1">
                 <ul>
-                    <li v-for="(item, index) in bannerList" :class="index === current ? 'active' : ''"
-                        @click="bannerClick(index, item)">
-                        <img :src="item.url" alt="">
+                    <li v-for="(row, index) in item.children || []" :class="index === current ? 'active' : ''"
+                        @click="bannerClick(index, row)">
+                        <img :src="row.fileUrl || ''" alt="">
                     </li>
                 </ul>
                 <div class="status">
-                    <span v-for="(item, index) in bannerList" :class="index === current ? 'active' : ''"
+                    <span v-for="(row, index) in bannerList" :class="index === current ? 'active' : ''"
                         @mouseenter="changeBanner(index)" @mouseleave="startLoop">
                         <!-- {{index + 1}} -->
                     </span>
@@ -339,101 +332,83 @@
                     <span class="next" @click="next" @mouseenter="stopLoop" @mouseleave="startLoop" style="background: url(./images/slider-arrow.png) -45px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
                 </div>
             </div>
-        </div>
 
-        <!-- 视频 -->
-        <div class="video">
-            <div>
+            <!-- 视频 -->
+            <div v-if="item.businessType == 1">
                 <p>
-                    热门视频
-                    <a href="">更多视频</a>
+                    {{item.moduleName}}
+                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
-                    <li v-for="(item, index) in videoList">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)">
                         <div class="coverImg">
-                            <img :src="item.coverImg" alt="">
-                            <var @click="beginVideo(item)"></var>
+                            <img :src="row.thumbnailUrl" alt="">
+                            <var @click.stop="beginVideo(row)"></var>
                         </div>
-                        <span :title="item.title">{{item.title}}</span>
+                        <span :title="row.title" class="reSpan">{{row.title}}</span>
                     </li>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
-        </div>
-
-        <!-- 图片 -->
-        <div class="video">
-            <div>
+            <!-- 图文 -->
+            <div v-if="item.businessType == 2">
                 <p>
-                    线上图片区域
-                    <a href="">更多图片</a>
+                    {{item.moduleName}}
+                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
-                    <li v-for="(item, index) in videoList">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
                         <div class="coverImg">
-                            <img :src="item.coverImg" alt="">
-                            <var @click="beginVideo(item)"></var>
+                            <img :src="row.fileUrl || ''" alt="">
                         </div>
-                        <span :title="item.title">{{item.title}}</span>
+                        <span :title="row.remark" class="reSpan">{{row.remark || '&nbsp;'}}</span>
                     </li>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
-        </div>
-
-        <!-- 文章 -->
-        <div class="video">
-            <div>
+            <!-- 文章 -->
+            <div v-if="item.businessType == 3">
                 <p>
-                    线上文章区域
-                    <a href="">更多文章</a>
+                    {{item.moduleName}}
+                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
                 </p>
-                <ul>
-                    <li v-for="(item, index) in videoList">
-                        <div class="coverImg">
-                            <img :src="item.coverImg" alt="">
-                            <var @click="beginVideo(item)"></var>
-                        </div>
-                        <span :title="item.title">{{item.title}}</span>
+                <ul class="article">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                        <p style="text-align: left;">{{row.subjectName}}</p>
+                        <p class="ellipsis" v-html="row.subjectContent"></p>
                     </li>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
-        </div>
-
-        <!-- 问题 -->
-        <div class="video">
-            <div>
+            <!-- 问题 -->
+            <div v-if="item.businessType == 4">
                 <p>
-                    线上问题区域
-                    <a href="">更多问题</a>
+                    {{item.moduleName}}
+                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
                 </p>
-                <ul>
-                    <li v-for="(item, index) in videoList">
-                        <div class="coverImg">
-                            <img :src="item.coverImg" alt="">
-                            <var @click="beginVideo(item)"></var>
-                        </div>
-                        <span :title="item.title">{{item.title}}</span>
+                <ul class="article">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                        <p style="text-align: left;">{{row.questionName}}</p>
+                        <p class="ellipsis" style="font-size: 16px;" v-html="row.questionContent"></p>
                     </li>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
-        </div>
-
-        <!-- 职业 -->
-        <div class="video">
-            <div>
+            <!-- 招聘 -->
+            <div v-if="item.businessType == 5">
                 <p>
-                    线上职业区域
-                    <a href="">更多职业</a>
+                    {{item.moduleName}}
+                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
                 </p>
-                <ul>
-                    <li v-for="(item, index) in videoList">
-                        <div class="coverImg">
-                            <img :src="item.coverImg" alt="">
-                            <var @click="beginVideo(item)"></var>
-                        </div>
-                        <span :title="item.title">{{item.title}}</span>
+                <ul class="article">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                        <p style="text-align: left;">{{row.postionName}}</p>
+                        <p class="ellipsis" style="font-size: 16px;" v-html="row.remark"></p>
                     </li>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
+
         </div>
 
         <!-- 底部 -->
@@ -447,16 +422,17 @@
                     <span>友情链接</span>
                 </p>
                 <p>
-                    © 2020  京ICP备 12003892号-11 
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802030151" target="_blank" style="color:#93999F;font-size:12px;margin:0 5px !important;">
+                    © 2020  浙ICP备 20022907 
+                    <a href="javascript:void(0);" target="_blank" style="color:#93999F;font-size:12px;margin:0 5px !important;">
                         <i style="display: inline-block;width: 16px; height: 16px;background: url(./images/beianicon.png) no-repeat 0 0;"></i>
-                        京公网安备11010802030151号
+                        浙ICP备20022907号
                     </a> 营业执照
                 </p>
             </div>
         </footer>
 
         <iframe src="./login.html" v-if="showLogin"></iframe>
+        <iframe src="./video.html" v-if="isVideo"></iframe>
     </div>
     
     <script>
@@ -466,68 +442,239 @@
             el: '#app',
             data: {
                 userName: userName || '', // 当前用户
+
+                headerIndex: 0, // 头部定位脚标
+
                 showLogin: false, // 登录开关
+                isLoginOut: false, // 登出开关
+                isVideo: false, // 音频开关
+                videoSrc: '', // 当前播放音频地址
+                videoImg: '', // 当前播放音频封面
                 verCode: '', //  验证码图片
-                current: 0, // 当前索引
+
+                moduleList: [], // 模块列表
+
+                bannerList: [], // banner
+                current: 0, // banner当前索引
                 timerId: null, // 清除循环标记
-                // 轮播数据
-                bannerList: [
-                    {
-                        url: 'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg'
-                    },
-                    {
-                        url: 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg'
-                    }
-                ],
-                // 视频列表
-                videoList: [
-                    {
-                        coverImg: './video/2.jpg',
-                        videoSrc: './video/1.mp4',
-                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
-                    },
-                    {
-                        coverImg: './video/2.jpg',
-                        videoSrc: './video/1.mp4',
-                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
-                    },
-                    {
-                        coverImg: './video/2.jpg',
-                        videoSrc: './video/1.mp4',
-                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
-                    },
-                    {
-                        coverImg: './video/2.jpg',
-                        videoSrc: './video/1.mp4',
-                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
-                    },
-                    {
-                        coverImg: './video/2.jpg',
-                        videoSrc: './video/1.mp4',
-                        title: '关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频关于JAVA的视频'
-                    }
-                ]
+                
             },
             methods: {
-                get: function () {
-                    //发送get请求
-                    this.$http.get('/try/ajax/ajax_info.txt').then(function (res) {
-                        document.write(res.body);
+                // 播放视频
+                beginVideo(item) {
+                    this.videoSrc = item.fileUrl;
+                    this.videoImg = item.thumbnailUrl;
+                    this.isVideo = true;
+                },
+                // 登录
+                login({ userName, password, email, mobile, captchaCode, type }, callBack) {
+                    ajaxHttp();
+                    this.$http.post(type == 0 ? urlAll.login : urlAll.register, {
+                        "password": password, //登录密码
+                        "userName": userName,  //用户登录名
+                        "captchaKey": this.verCode.captchaKey, //验证码接口返回的captchaKey
+                        "email": email, //验证码接口返回的captchaKey
+                        "mobile": mobile, //验证码接口返回的captchaKey
+                        "captchaCode": captchaCode  //验证码图片上的数字
+                    }).then((res) => {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            if(type == 0) {
+                                localStorage.setItem('user', JSON.stringify(data));
+                                const { userName } = data || {};
+                                this.userName = userName;
+                                this.showLogin = false;
+                            } else {
+                                alert('注册成功');
+                                // localStorage.setItem('user', JSON.stringify(data));
+                                // const { userName } = data || {};
+                                // this.userName = userName;
+                                this.showLogin = false;
+                            }
+                        } else {
+                            callBack && callBack(message);
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                    });
+                },
+                // 登出
+                loginOut() {
+                    this.userName = '';
+                    localStorage.removeItem('user');
+                    this.isLoginOut = false;
+                },
+                // 获取验证码
+                getVerCode(callBack) {
+                    ajaxHttp();
+                    this.$http.post(urlAll.imgCode).then((res) => {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            this.verCode = data || {};
+                            callBack && callBack(data);
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                    });
+                },
+                // 请求模块列表
+                async getModuleList() {
+                    ajaxHttp();
+                    await this.$http.get(urlAll.moduleList).then((res) => {
+                        let { code, data, message } = res.body;
+                        if(code == 200) {
+                            this.moduleList = data || [];
+                            this.moduleList.forEach(element => {
+                                element.children = [];
+                                const { fileType, moduleId, orders } = element || {};
+                                let fun;
+                                switch(+element.businessType) {
+                                    case 1:
+                                        fun = 'getFile';
+                                        break;
+                                    case 2:
+                                        fun = 'getFile';
+                                        break;
+                                    case 3:
+                                        fun = 'getSubjectPages';
+                                        break;
+                                    case 4:
+                                        fun = 'getQuestionPages';
+                                        break;
+                                    case 5:
+                                        fun = 'getPostionPages';
+                                        break;
+                                }
+                                this[fun]({
+                                    fileType, 
+                                    moduleId
+                                }, (resData) => {
+                                    element.children = resData.rows || [];
+                                });
+                            });
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                    console.log(this.moduleList);
+                    setTimeout(() => {
+                        this.bannerList = (this.moduleList.find(item => item.businessType == 2 && item.orders == 1) || {}).children || [];
+                        this.$set(this.moduleList, 0, this.moduleList[0]);
+                        this.int(4000);
+                        this.winScroll();
+                        window.addEventListener('scroll', this.winScroll);
+                    }, 100);
+                },
+                // 请求1视频，2图片
+                async getFile({ fileType, moduleId, }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.filePages, {
+                        "title": "", //视频标题
+                        fileType,  //文件类型 1视频，2图片，3文档
+                        moduleId, //模块ID
+                        "typeId": '', //分类ID
+                        "page": 1,
+                        "rows": 10
+                    }).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            callBack && callBack(data);
+                        }
                     }, function () {
                         console.log('请求失败处理');
                     });
                 },
-                // 播放视频
-                beginVideo(item) {
-
+                // 请求文章
+                async getSubjectPages({ moduleId, }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.subjectPages, {
+                        moduleId, //模块ID
+                        "page": 1,
+                        "rows": 10
+                    }).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            callBack && callBack(data);
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
                 },
-                // 登录
-                login({ userName, password, verCode }) {
-                    debugger
+                // 请求问题
+                async getQuestionPages({ fileType, moduleId, }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.questionPages, {
+                        "page": 1,
+                        "rows": 10
+                    }).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            callBack && callBack(data);
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
                 },
-                // 获取验证码
-                getVerCode() {
+                // 请求职位
+                async getPostionPages({ fileType, moduleId, }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.postionPages, {
+                        "page": 1,
+                        "rows": 10
+                    }).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            callBack && callBack(data);
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                },
 
+                // 跳转详情
+                toDetail(item, row) {
+                    sessionStorage.removeItem('businessType');
+                    sessionStorage.removeItem('id');
+                    sessionStorage.removeItem('moduleId');
+                    sessionStorage.setItem('businessType', item.businessType);
+                    sessionStorage.setItem('id', row.fileId || row.subjectId || row.questionId || row.postionId);
+                    sessionStorage.setItem('moduleId', item.moduleId);
+                    window.location.href = './detail.html';
+                },
+
+                // 监听滚动定位其位置
+                winScroll() {
+                    const box = this.$refs.box;
+                    let scrollTop = 0;
+                    for (let index = 0; index < box.length; index++) {
+                        if(document.documentElement.scrollTop < scrollTop) {
+                            return this.headerIndex = index - 1;
+                        }
+                        scrollTop += box[index].offsetHeight;
+                    }
+                },
+                // 点击头部滚动定位
+                positionClick(i) {
+                    const box = this.$refs.box;
+                    let scrollTop = 0;
+                    for (let index = 0; index < i; index++) {
+                        scrollTop += box[index].offsetHeight;
+                    }
+                    var start = document.documentElement.scrollTop;
+                    var end = scrollTop;
+                    var startStep = 0;
+                    var endStep = 10;
+                    var everyStep = (end - start) / (endStep - startStep);
+                    console.log(everyStep)
+                    var timer = setInterval(() => {
+                        startStep ++;
+                        if(startStep == endStep) {
+                            clearInterval(timer);
+                            return document.documentElement.scrollTop = scrollTop;
+                        }
+                        start += everyStep;
+                        document.documentElement.scrollTop = start;
+                    }, 40);
                 },
                 // 鼠标移入状态圆点
                 changeBanner(index) {
@@ -570,7 +717,7 @@
                 }
             },
             created () {
-                this.int(4000);
+                this.getModuleList();
             }
         })
     </script>

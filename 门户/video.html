@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        .video {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        video {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: fixed;
+            top: 17px;
+            right: 20px;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            background: url(./images/nlogin.png) no-repeat 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="video">
+        <!-- <video src="./video/1.mp4" controls muted></video> -->
+    </div>
+    <div class="close" onclick="window.parent.app.isVideo = false">
+        
+    </div>
+    <script>
+        // var href = window.location.href.split('?')[1] || '';
+        // var src = href.split('=')[1] || '';
+        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' controls poster="' + window.parent.app.videoImg + '"></video>'
+    </script>
+</body>
+</html>
