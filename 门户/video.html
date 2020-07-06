@@ -25,6 +25,17 @@
             max-width: 90%;
             max-height: 90%;
         }
+
+        video::-internal-media-controls-download-button {
+            display:none;
+        }
+        video::-webkit-media-controls-enclosure {
+            overflow:hidden;
+        }
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 50px); 
+        }
+        
         .close {
             position: fixed;
             top: 17px;
@@ -46,7 +57,7 @@
     <script>
         // var href = window.location.href.split('?')[1] || '';
         // var src = href.split('=')[1] || '';
-        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' controls poster="' + window.parent.app.videoImg + '"></video>'
+        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' controls poster="' + window.parent.app.videoImg + '" controlslist="nodownload"></video>'
     </script>
 </body>
 </html>

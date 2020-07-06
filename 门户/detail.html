@@ -274,6 +274,23 @@
                         </li>
                     </ul>
                 </div>
+                <div class="li_problem_Reply" v-if="businessType == 4">
+                    <div>回复信息</div>
+                    <ul>
+                        <li>
+                            回复人 <span>2020-06-09 14:55:54</span>
+                            <p>
+                                content
+                            </p>
+                        </li>
+                        <li>
+                            回复人 <span>2020-06-09 14:55:54</span>
+                            <p>
+                                content
+                            </p>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="li_problem_right">
                 <div>
@@ -288,14 +305,13 @@
                         </li>
                     </ul>
                     <div class="page" v-if="total">
-                        <button @click="prePage" :disabled="currentPage === 1">上一页</button>
-                        <!--总页数小于8的-->
-                        <div v-if="pageTotal <= showPageNo">
-                            <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
-                                :key="i">{{i}}</button>
+                        <button @click="prePage" :disabled="currentPage == 1">上一页</button>
+                        <!--总页数小于6的-->
+                        <div v-if="pageTotal < showPageNo + 1">
+                            <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i == currentPage}" :key="i">{{i}}</button>
                         </div>
                         <div v-else-if="currentPage < 4">
-                            <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i === currentPage}"
+                            <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i == currentPage}"
                                 :key="i">{{i}}</button>
                             <button :disabled="true">···</button>
                             <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
@@ -304,7 +320,7 @@
                             <button @click="changeCurrentPage(1)">1</button>
                             <button :disabled="true">···</button>
                             <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
-                                :class="{active:(i + (pageTotal - 4)) === currentPage}"
+                                :class="{active:(i + (pageTotal - 4)) == currentPage}"
                                 :key="i">{{i + (pageTotal - 4)}}</button>
                         </div>
                         <div v-else>
@@ -317,7 +333,7 @@
                             <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
                         </div>
                         <!--下一页-->
-                        <button @click="nextPage" :disabled="currentPage === pageTotal">下一页</button>
+                        <button @click="nextPage" :disabled="currentPage == pageTotal">下一页</button>
                     </div>
                 </div>
             </div>
@@ -524,17 +540,17 @@
                 },
                 prePage() {
                     this.currentPage -= 1;
-                    sessionStorage.setItem('currentPage', this.currentPage);
+                    // sessionStorage.setItem('currentPage', this.currentPage);
                     this.getData();
                 },
                 nextPage() {
-                    this.currentPage += 1;
-                    sessionStorage.setItem('currentPage', this.currentPage );
+                    this.currentPage = +this.currentPage + 1;
+                    // sessionStorage.setItem('currentPage', this.currentPage );
                     this.getData();
                 },
                 changeCurrentPage(i) {
                     this.currentPage = i;
-                    sessionStorage.setItem('currentPage', this.currentPage );
+                    // sessionStorage.setItem('currentPage', this.currentPage );
                     this.getData();
                 }
             },

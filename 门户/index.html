@@ -149,7 +149,7 @@
             margin: 0 auto;
         }
 
-        .video p {
+        .video>div>p {
             text-align: center;
             font-size: 20px;
             padding: 20px;
@@ -282,9 +282,11 @@
             height: auto;
             cursor: pointer;
         }
-        .video .article li p {
+        .video .article li>p {
             text-align: left;
             max-height: 200px;
+            padding: 20px;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -312,7 +314,7 @@
             </div>
         </header>
 
-        <div v-for="(item, index) in moduleList" :class="item.businessType == 2 && item.orders == 1 ? 'banner' : 'video'" ref="box">
+        <div v-for="(item, index) in moduleList" :class="item.businessType == 2 && item.orders == 1 ? 'banner' : 'video'" ref="box" v-show="isShow">
             <!-- banner -->
             <div class="box" v-if="item.businessType == 2 && item.orders == 1">
                 <ul>
@@ -337,7 +339,7 @@
             <div v-if="item.businessType == 1">
                 <p>
                     {{item.moduleName}}
-                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)">
@@ -354,7 +356,7 @@
             <div v-if="item.businessType == 2">
                 <p>
                     {{item.moduleName}}
-                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
@@ -370,7 +372,7 @@
             <div v-if="item.businessType == 3">
                 <p>
                     {{item.moduleName}}
-                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
@@ -384,7 +386,7 @@
             <div v-if="item.businessType == 4">
                 <p>
                     {{item.moduleName}}
-                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
@@ -398,7 +400,7 @@
             <div v-if="item.businessType == 5">
                 <p>
                     {{item.moduleName}}
-                    <a href="" v-if="(item.children || []).length > 5">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
@@ -444,6 +446,8 @@
                 userName: userName || '', // 当前用户
 
                 headerIndex: 0, // 头部定位脚标
+
+                isShow: false,
 
                 showLogin: false, // 登录开关
                 isLoginOut: false, // 登出开关
@@ -556,13 +560,14 @@
                     }, function () {
                         console.log('请求失败处理');
                     });
-                    console.log(this.moduleList);
+                    // console.log(this.moduleList);
                     setTimeout(() => {
                         this.bannerList = (this.moduleList.find(item => item.businessType == 2 && item.orders == 1) || {}).children || [];
                         this.$set(this.moduleList, 0, this.moduleList[0]);
                         this.int(4000);
                         this.winScroll();
                         window.addEventListener('scroll', this.winScroll);
+                        this.isShow = true;
                     }, 100);
                 },
                 // 请求1视频，2图片
@@ -574,7 +579,7 @@
                         moduleId, //模块ID
                         "typeId": '', //分类ID
                         "page": 1,
-                        "rows": 10
+                        "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
@@ -590,7 +595,7 @@
                     await this.$http.post(urlAll.subjectPages, {
                         moduleId, //模块ID
                         "page": 1,
-                        "rows": 10
+                        "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
@@ -605,7 +610,7 @@
                     ajaxHttp();
                     await this.$http.post(urlAll.questionPages, {
                         "page": 1,
-                        "rows": 10
+                        "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
@@ -620,7 +625,7 @@
                     ajaxHttp();
                     await this.$http.post(urlAll.postionPages, {
                         "page": 1,
-                        "rows": 10
+                        "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
@@ -633,12 +638,13 @@
 
                 // 跳转详情
                 toDetail(item, row) {
-                    sessionStorage.removeItem('businessType');
-                    sessionStorage.removeItem('id');
-                    sessionStorage.removeItem('moduleId');
+                    // sessionStorage.removeItem('businessType');
+                    // sessionStorage.removeItem('id');
+                    // sessionStorage.removeItem('moduleId');
                     sessionStorage.setItem('businessType', item.businessType);
                     sessionStorage.setItem('id', row.fileId || row.subjectId || row.questionId || row.postionId);
                     sessionStorage.setItem('moduleId', item.moduleId);
+                    sessionStorage.setItem('currentPage', 1);
                     window.location.href = './detail.html';
                 },
 

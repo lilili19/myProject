@@ -13,6 +13,7 @@
         input {
             outline: 0;
         }
+
         .overhidden {
             overflow: hidden
         }
@@ -911,60 +912,68 @@
     <div class="login">
         <div id="signin" class="rl-modal in" aria-hidden="false" onclick="event.stopPropagation();">
             <div class="rl-modal-header">
-                <h1> 
-                    <span class="active-title" onclick="loginRe(0)">登录</span><span onclick="loginRe(1)">注册</span> 
-                </h1> 
+                <h1>
+                    <span class="active-title" onclick="loginRe(0)">登录</span><span onclick="loginRe(1)">注册</span>
+                </h1>
                 <a href="javascript: close()" class="rl-close"></a>
             </div>
             <div class="rl-modal-body js-loginWrap">
                 <div class="clearfix">
                     <form id="signup-form" autocomplete="off">
-                        <div class="rlf-group pr" style="margin-bottom: 15px;"> <input type="text" value="" maxlength="37" name="email"
-                                data-validate="require-mobile-phone" autocomplete="off"
+                        <div class="rlf-group pr" style="margin-bottom: 15px;"> <input type="text" value=""
+                                maxlength="37" name="email" data-validate="require-mobile-phone" autocomplete="off"
                                 class="xa-emailOrPhone ipt ipt-email js-own-name" placeholder="请输入登录账号" checked="1">
-                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入登录账号</p>
+                            <p class="rlf-tip-wrap errorHint color-red"
+                                style="color: red;height: auto;padding-left: 5px;display: none;">请输入登录账号</p>
                         </div>
-                        <div class="rlf-group  pr" style="margin-bottom: 15px;"> <a href="javascript:void(0)" hidefocus="true"
-                                class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
-                                type="password" name="password" data-validate="require-password"
-                                class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入密码" maxlength="20" checked="2"
-                                autocomplete="off">
-                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入密码</p>
+                        <div class="rlf-group  pr" style="margin-bottom: 15px;"> <a href="javascript:void(0)"
+                                hidefocus="true" class="proclaim-btn js-proclaim imv2-visibility_off is-pwd"
+                                tabindex="-1"></a> <input type="password" name="password"
+                                data-validate="require-password" class="ipt ipt-pwd js-loginPassword js-pass-pwd"
+                                placeholder="请输入密码" maxlength="20" checked="2" autocomplete="off">
+                            <p class="rlf-tip-wrap errorHint color-red"
+                                style="color: red;height: auto;padding-left: 5px;display: none;">请输入密码</p>
                         </div>
                         <!-- 手机号 -->
-                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;"> 
+                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;">
                             <a href="javascript:void(0)" hidefocus="true"
-                            class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
-                            type="text" name="text" data-validate="require-text"
-                            class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入手机号" maxlength="20" checked="3"
-                            autocomplete="off">
-                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入手机号</p>
+                                class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
+                                type="text" name="text" data-validate="require-text"
+                                class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入手机号" maxlength="20"
+                                checked="3" autocomplete="off">
+                            <p class="rlf-tip-wrap errorHint color-red"
+                                style="color: red;height: auto;padding-left: 5px;display: none;">请输入手机号</p>
                         </div>
                         <!-- 邮箱 -->
-                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;"> 
+                        <div class="rlf-group  pr" style="margin-bottom: 15px;display: none;">
                             <a href="javascript:void(0)" hidefocus="true"
-                            class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
-                            type="text" name="text" data-validate="require-text"
-                            class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入邮箱" maxlength="20" checked="4"
-                            autocomplete="off">
-                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入邮箱</p>
+                                class="proclaim-btn js-proclaim imv2-visibility_off is-pwd" tabindex="-1"></a> <input
+                                type="text" name="text" data-validate="require-text"
+                                class="ipt ipt-pwd js-loginPassword js-pass-pwd" placeholder="请输入邮箱" maxlength="20"
+                                checked="4" autocomplete="off">
+                            <p class="rlf-tip-wrap errorHint color-red"
+                                style="color: red;height: auto;padding-left: 5px;display: none;">请输入邮箱</p>
                         </div>
                         <!-- 验证码 -->
-                        <div class="rlf-group clearfix form-control js-verify-row" style="margin-bottom: 15px;"> 
-                            <input
-                                type="text" name="verify" class="ipt ipt-verify l" data-validate="require-string"
-                                data-callback="checkverity" maxlength="4" data-minlength="4" placeholder="请输入验证码" checked="5"> 
+                        <div class="rlf-group clearfix form-control js-verify-row" style="margin-bottom: 15px;">
+                            <input type="text" name="verify" class="ipt ipt-verify l" data-validate="require-string"
+                                data-callback="checkverity" maxlength="4" data-minlength="4" placeholder="请输入验证码"
+                                checked="5">
                             <a href="javascript:void(0)" hidefocus="true" class="verify-img-wrap js-verify-refresh">
                                 <img src="" alt="" verSrc style="width: 100%;height: 100%;" onclick="setCerCode()">
-                            </a> 
+                            </a>
                             <a href="javascript:void(0)" hidefocus="true" class="icon-refresh js-verify-refresh"></a>
-                            <p class="rlf-tip-wrap errorHint color-red" style="color: red;height: auto;padding-left: 5px;display: none;">请输入正确验证码</p>
+                            <p class="rlf-tip-wrap errorHint color-red"
+                                style="color: red;height: auto;padding-left: 5px;display: none;">请输入正确验证码</p>
                         </div>
-                        <div class="rlf-group rlf-appendix form-control  clearfix" style="text-align: right" findPassword>
-                            <a href="/user/newforgot" class="rlf-forget r" target="_blank" hidefocus="true" style="text-decoration: none;font-size: 14px;" >找回密码</a>
+                        <div class="rlf-group rlf-appendix form-control  clearfix" style="text-align: right"
+                            findPassword>
+                            <a href="/user/newforgot" class="rlf-forget r" target="_blank" hidefocus="true"
+                                style="text-decoration: none;font-size: 14px;">修改密码</a>
                         </div>
                         <div class="rlf-group clearfix"> <input type="button" value="登录" hidefocus="true"
-                                class="moco-btn moco-btn-red moco-btn-lg btn-full xa-login" onclick="login()" login> </div>
+                                class="moco-btn moco-btn-red moco-btn-lg btn-full xa-login" onclick="login()" login>
+                        </div>
                         <div loginError style="color: red;"></div>
                     </form>
                 </div>
@@ -978,7 +987,7 @@
             window.parent.app.showLogin = false;
         }
 
-        document.onclick = function() {
+        document.onclick = function () {
             // close()
         }
         // 登录注册切换
@@ -986,9 +995,9 @@
             var span = document.querySelector('.rl-modal-header').querySelectorAll('span');
             span[0].className = '';
             span[1].className = '';
-            span[type].className = 'active-title'; 
+            span[type].className = 'active-title';
             document.querySelector('[login]').value = span[type].innerHTML;
-            if(type == 0) {
+            if (type == 0) {
                 document.querySelector('[findPassword]').style.display = 'block';
                 document.querySelector('[checked="3"]').parentNode.style.display = 'none';
                 document.querySelector('[checked="4"]').parentNode.style.display = 'none';
@@ -1007,30 +1016,49 @@
             document.querySelector('[loginError]').innerHTML = '';
             for (let index = 0; index < checked.length; index++) {
                 const element = checked[index];
-                if(!element.value && element.parentNode.style.display !== 'none') return element.parentNode.querySelector('p').style.display = 'block';
+                if (!element.value && element.parentNode.style.display !== 'none') return element.parentNode.querySelector('p').style.display = 'block';
                 else element.parentNode.querySelector('p').style.display = 'none';
             }
-            window.parent.app.login({ 
-                userName: checked[0].value, 
-                password: checked[1].value, 
+            window.parent.app.login({
+                userName: checked[0].value,
+                password: checked[1].value,
                 captchaCode: checked[4].value,
                 email: checked[2].value,
                 mobile: checked[3].value,
                 type: document.querySelector('[login]').value === document.querySelector('.rl-modal-header').querySelectorAll('span')[0].innerHTML ? 0 : 1
-            }, function(error) {
+            }, function (error) {
                 document.querySelector('[loginError]').innerHTML = error;
                 setCerCode();
             });
         }
         // 设置验证码
         function setCerCode() {
-            window.parent.app.getVerCode(function(verCode) {
+            window.parent.app.getVerCode(function (verCode) {
                 const { captchaKey, img } = verCode;
                 document.querySelector('[verSrc]').src = img || '';
             })
         }
-        setCerCode()
-       
+        setCerCode();
+
+
+        // 手机验证
+        function isPhone(phone) {
+            var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+            if (!myreg.test(phone)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 邮箱验证
+        function check(text) {
+            var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+            if (!reg.test(text)) { //正则验证不通过，格式不对
+                return false;
+            } else {
+                return true;
+            }
+        }
     </script>
 </body>
 
