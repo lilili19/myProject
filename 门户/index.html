@@ -17,11 +17,13 @@
             box-sizing: border-box;
             text-decoration: none;
         }
+
         body {
             color: #333;
             background-color: #eee;
             padding-top: 66px;
         }
+
         .banner {
             width: 100%;
             min-width: 1200px;
@@ -35,7 +37,7 @@
             height: 100%;
         }
 
-        .banner .box:hover >.btn{
+        .banner .box:hover>.btn {
             display: block;
             animation: show .5s;
         }
@@ -45,6 +47,7 @@
                 display: block;
                 opacity: 0;
             }
+
             100% {
                 display: block;
                 opacity: 1;
@@ -135,7 +138,7 @@
             float: right;
         }
 
-      
+
         .video {
             width: 100%;
             margin: 0 auto;
@@ -182,12 +185,15 @@
             width: calc(33.33333% - 20px);
             margin: 10px;
             font-size: 14px;
+            overflow: hidden;
         }
+
         .video ul li .coverImg {
             flex: 1;
             overflow: hidden;
-            margin-bottom: 10px;
+            /* margin-bottom: 10px; */
             position: relative;
+            transition: 1s;
         }
 
         .video ul li .coverImg img {
@@ -210,6 +216,9 @@
             /* display: none; */
         }
 
+        [imgC]:hover .coverImg {
+            transform: scale(1.2);
+        }
         /* .video ul li .coverImg:hover var {
             display: block;
             animation: video .5s alternate;
@@ -220,6 +229,7 @@
                 opacity: 0;
                 display: block;
             }
+
             100% {
                 opacity: 1;
                 display: block;
@@ -232,7 +242,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            margin: 15px 10px;
+            margin: 5px 10px;
             overflow: hidden;
         }
 
@@ -256,7 +266,7 @@
             text-align: center;
         }
 
-        footer .con span { 
+        footer .con span {
             margin: 0 10px;
         }
 
@@ -268,25 +278,44 @@
             height: 100%;
             z-index: 1000;
         }
+
         .video .article {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
         }
+
         .video .article li {
             background-color: white;
             box-shadow: 2px 5px 15px rgba(0, 0, 0, .15);
             border-radius: 5px;
-            width: 48%;
+            /* width: 48%; */
+            width: calc(33.33333% - 20px);
             margin-bottom: 10px;
             height: auto;
             cursor: pointer;
         }
+
         .video .article li>p {
             text-align: left;
             max-height: 200px;
             padding: 20px;
             font-size: 24px;
+        }
+
+        .center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* padding-left: 20px; */
+            color: white;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -295,17 +324,26 @@
     <div id="app">
         <header>
             <div class="header_con">
-                <img src="./images/logo@2x.png"></img>
+                <img src="./images/logo.png"></img>
+                <span style="color: rgb(191, 171, 171);font-size: 14px;">
+                    <span style="display: block;">杭州软测</span>
+                    <span>信息技术有限公司</span>
+                </span>
                 <div>
                     <div class="header_con_center">
                         <p>
-                            <span v-for="(item, index) in moduleList.slice(0, 6)" :class="{ activeSelect: headerIndex === index }" @click="positionClick(index)">{{item.moduleName}}</span>
+                            <span v-for="(item, index) in moduleList.slice(0, 8)"
+                                :class="{ activeSelect: headerIndex === index }"
+                                @click="positionClick(index)">{{item.moduleName}}</span>
                         </p>
-                        <p header_con_t v-if="moduleList.length > 6">
-                            <span v-for="(item, index) in moduleList.slice(6, moduleList.length)" :class="{ activeSelect: headerIndex === index + 6 }" @click="positionClick(index + 6)">{{item.moduleName}}</span>
+                        <p header_con_t v-if="moduleList.length > 8">
+                            <span v-for="(item, index) in moduleList.slice(8, moduleList.length)"
+                                :class="{ activeSelect: headerIndex === index + 8 }"
+                                @click="positionClick(index + 8)">{{item.moduleName}}</span>
                         </p>
                     </div>
-                    <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">{{userName}}</p>
+                    <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">
+                        {{userName}}</p>
                     <p v-else style="cursor: pointer;" @click="showLogin = true">
                         请登录
                     </p>
@@ -314,7 +352,8 @@
             </div>
         </header>
 
-        <div v-for="(item, index) in moduleList" :class="item.businessType == 2 && item.orders == 1 ? 'banner' : 'video'" ref="box" v-show="isShow">
+        <div v-for="(item, index) in moduleList"
+            :class="item.businessType == 2 && item.orders == 1 ? 'banner' : 'video'" ref="box" v-show="isShow">
             <!-- banner -->
             <div class="box" v-if="item.businessType == 2 && item.orders == 1">
                 <ul>
@@ -330,8 +369,10 @@
                     </span>
                 </div>
                 <div class="btn">
-                    <span class="prev" @click="prev" @mouseenter="stopLoop" @mouseleave="startLoop" style="background: url(./images/slider-arrow.png) -167px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
-                    <span class="next" @click="next" @mouseenter="stopLoop" @mouseleave="startLoop" style="background: url(./images/slider-arrow.png) -45px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
+                    <span class="prev" @click="prev" @mouseenter="stopLoop" @mouseleave="startLoop"
+                        style="background: url(./images/slider-arrow.png) -167px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
+                    <span class="next" @click="next" @mouseenter="stopLoop" @mouseleave="startLoop"
+                        style="background: url(./images/slider-arrow.png) -45px 23px no-repeat;background-color:rgba(0, 0, 0, .7)"></span>
                 </div>
             </div>
 
@@ -339,7 +380,8 @@
             <div v-if="item.businessType == 1">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                        @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)">
@@ -349,65 +391,81 @@
                         </div>
                         <span :title="row.title" class="reSpan">{{row.title}}</span>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length"
+                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
             <!-- 图文 -->
             <div v-if="item.businessType == 2">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                        @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;position: relative;padding: 0;height: 200px;" imgC>
                         <div class="coverImg">
                             <img :src="row.fileUrl || ''" alt="">
                         </div>
-                        <span :title="row.remark" class="reSpan">{{row.remark || '&nbsp;'}}</span>
+                        <div class="center">
+                            {{row.title}}
+                        </div>
+                        <!-- <span :title="row.title" class="ellipsis" style="font-size: 18px;font-weight: bold;margin: 5px 8px;">{{row.title || '&nbsp;'}}</span> -->
+                        <!-- <span :title="row.remark" class="ellipsis" style="margin: 5px 10px">{{row.remark || '&nbsp;'}}</span> -->
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length"
+                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
             <!-- 文章 -->
             <div v-if="item.businessType == 3">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                        @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)"
+                        style="cursor: pointer;">
                         <p style="text-align: left;">{{row.subjectName}}</p>
                         <p class="ellipsis" v-html="row.subjectContent"></p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length"
+                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
             <!-- 问题 -->
             <div v-if="item.businessType == 4">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                        @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)"
+                        style="cursor: pointer;">
                         <p style="text-align: left;">{{row.questionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.questionContent"></p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length"
+                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
             <!-- 招聘 -->
             <div v-if="item.businessType == 5">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5" @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                        @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;">
+                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)"
+                        style="cursor: pointer;">
                         <p style="text-align: left;">{{row.postionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.remark"></p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length"
+                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
                 </ul>
             </div>
 
@@ -424,9 +482,11 @@
                     <span>友情链接</span>
                 </p>
                 <p>
-                    © 2020  浙ICP备 20022907 
-                    <a href="javascript:void(0);" target="_blank" style="color:#93999F;font-size:12px;margin:0 5px !important;">
-                        <i style="display: inline-block;width: 16px; height: 16px;background: url(./images/beianicon.png) no-repeat 0 0;"></i>
+                    © 2020 浙ICP备 20022907
+                    <a href="javascript:void(0);" target="_blank"
+                        style="color:#93999F;font-size:12px;margin:0 5px !important;">
+                        <i
+                            style="display: inline-block;width: 16px; height: 16px;background: url(./images/beianicon.png) no-repeat 0 0;"></i>
                         浙ICP备20022907号
                     </a> 营业执照
                 </p>
@@ -436,7 +496,7 @@
         <iframe src="./login.html" v-if="showLogin"></iframe>
         <iframe src="./video.html" v-if="isVideo"></iframe>
     </div>
-    
+
     <script>
         var user = JSON.parse(localStorage.getItem('user') || '{}');
         const { userName } = user;
@@ -461,7 +521,7 @@
                 bannerList: [], // banner
                 current: 0, // banner当前索引
                 timerId: null, // 清除循环标记
-                
+
             },
             methods: {
                 // 播放视频
@@ -482,8 +542,8 @@
                         "captchaCode": captchaCode  //验证码图片上的数字
                     }).then((res) => {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
-                            if(type == 0) {
+                        if (code == 200) {
+                            if (type == 0) {
                                 localStorage.setItem('user', JSON.stringify(data));
                                 const { userName } = data || {};
                                 this.userName = userName;
@@ -513,7 +573,7 @@
                     ajaxHttp();
                     this.$http.post(urlAll.imgCode).then((res) => {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             this.verCode = data || {};
                             callBack && callBack(data);
                         }
@@ -526,13 +586,13 @@
                     ajaxHttp();
                     await this.$http.get(urlAll.moduleList).then((res) => {
                         let { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             this.moduleList = data || [];
                             this.moduleList.forEach(element => {
                                 element.children = [];
                                 const { fileType, moduleId, orders } = element || {};
                                 let fun;
-                                switch(+element.businessType) {
+                                switch (+element.businessType) {
                                     case 1:
                                         fun = 'getFile';
                                         break;
@@ -550,7 +610,7 @@
                                         break;
                                 }
                                 this[fun]({
-                                    fileType, 
+                                    fileType,
                                     moduleId
                                 }, (resData) => {
                                     element.children = resData.rows || [];
@@ -582,7 +642,7 @@
                         "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             callBack && callBack(data);
                         }
                     }, function () {
@@ -598,7 +658,7 @@
                         "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             callBack && callBack(data);
                         }
                     }, function () {
@@ -613,7 +673,7 @@
                         "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             callBack && callBack(data);
                         }
                     }, function () {
@@ -628,7 +688,7 @@
                         "rows": 6
                     }).then(function (res) {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
+                        if (code == 200) {
                             callBack && callBack(data);
                         }
                     }, function () {
@@ -653,7 +713,7 @@
                     const box = this.$refs.box;
                     let scrollTop = 0;
                     for (let index = 0; index < box.length; index++) {
-                        if(document.documentElement.scrollTop < scrollTop) {
+                        if (document.documentElement.scrollTop < scrollTop) {
                             return this.headerIndex = index - 1;
                         }
                         scrollTop += box[index].offsetHeight;
@@ -667,16 +727,16 @@
                         scrollTop += box[index].offsetHeight;
                     }
                     var start = document.documentElement.scrollTop;
-                    var end = scrollTop;
+                    var end = scrollTop + 10;
                     var startStep = 0;
                     var endStep = 10;
                     var everyStep = (end - start) / (endStep - startStep);
                     console.log(everyStep)
                     var timer = setInterval(() => {
-                        startStep ++;
-                        if(startStep == endStep) {
+                        startStep++;
+                        if (startStep == endStep) {
                             clearInterval(timer);
-                            return document.documentElement.scrollTop = scrollTop;
+                            return document.documentElement.scrollTop = end;
                         }
                         start += everyStep;
                         document.documentElement.scrollTop = start;
@@ -689,7 +749,7 @@
                 },
                 // 鼠标点击banner内容
                 bannerClick(index, item) {
-                    
+
                 },
                 // 点击上一张按钮
                 prev() {
@@ -722,7 +782,7 @@
                     }, time);
                 }
             },
-            created () {
+            created() {
                 this.getModuleList();
             }
         })

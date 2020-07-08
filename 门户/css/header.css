@@ -49,8 +49,8 @@ header .loginOut:hover {
 }
 
 header .header_con img {
-    height: 23px;
-    margin-right: 20px;
+    height: 45px;
+    margin-right: 10px;
     margin-top: 2px;
 }
 
@@ -63,7 +63,7 @@ header .header_con>div {
 }
 
 header .header_con>div span {
-    width: 120px;
+    width: 100px;
     cursor: pointer;
     display: inline-block;
     text-align: center;
@@ -90,7 +90,7 @@ header .header_con [header_con_t] {
 }
 header .header_con .header_con_center {
     height: 100%;
-    margin-left: 20px;
+    margin-left: 70px;
     position: relative;
     flex: 1;
     display: flex;

@@ -217,6 +217,29 @@
             height: 100%;
             z-index: 1000;
         }
+        footer {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+        }
+
+        footer .con {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        footer .con p {
+            text-align: center;
+        }
+
+        footer .con span { 
+            margin: 0 10px;
+        }
     </style>
 </head>
 
@@ -225,7 +248,11 @@
         <!-- 头部 -->
         <header>
             <div class="header_con">
-                <img src="./images/logo@2x.png"></img>
+                <img src="./images/logo.png"></img>
+                <span style="color: rgb(191, 171, 171);font-size: 14px;">
+                    <span style="display: block;">杭州软测</span> 
+                    <span>信息技术有限公司</span> 
+                </span>
                 <div>
                     <div class="header_con_center">
                         
@@ -274,19 +301,13 @@
                         </li>
                     </ul>
                 </div>
-                <div class="li_problem_Reply" v-if="businessType == 4">
+                <div class="li_problem_Reply" v-if="businessType == 4 && replyList.length">
                     <div>回复信息</div>
                     <ul>
-                        <li>
-                            回复人 <span>2020-06-09 14:55:54</span>
+                        <li v-for="(item, index) in replyList">
+                            {{item.createUserName}} <span>{{item.createTime}}</span>
                             <p>
-                                content
-                            </p>
-                        </li>
-                        <li>
-                            回复人 <span>2020-06-09 14:55:54</span>
-                            <p>
-                                content
+                                {{item.answerContent}}
                             </p>
                         </li>
                     </ul>
@@ -338,6 +359,25 @@
                 </div>
             </div>
         </div>
+         <!-- 底部 -->
+         <footer style="margin-top: 20px;">
+            <div class="con">
+                <p style="font-size: 16px;padding: 20px;">
+                    <span>人才招聘</span>
+                    <span>联系我们</span>
+                    <span>讲师招募</span>
+                    <span>意见反馈</span>
+                    <span>友情链接</span>
+                </p>
+                <p>
+                    © 2020  浙ICP备 20022907 
+                    <a href="javascript:void(0);" target="_blank" style="color:#93999F;font-size:12px;margin:0 5px !important;">
+                        <i style="display: inline-block;width: 16px; height: 16px;background: url(./images/beianicon.png) no-repeat 0 0;"></i>
+                        浙ICP备20022907号
+                    </a> 营业执照
+                </p>
+            </div>
+        </footer>
 
         <iframe src="./login.html" v-if="showLogin"></iframe>
         <iframe src="./video.html" v-if="isVideo"></iframe>
@@ -366,7 +406,8 @@
                 showPageNo: 6,
 
                 detailData: {},  // 左边数据
-                detailList: []  // 右边列表数据
+                detailList: [],  // 右边列表数据
+                replyList: [] // 回复列表
             },
             computed: {
                 pageTotal() {
@@ -465,6 +506,24 @@
                         this.total = resData.total;
                     });
                 },
+                // 请求获取回复信息
+                async getReply() {
+                    const { questionId } = this.detailData;
+                    this.$http.post(urlAll.pages, {
+                        questionId,
+                        "page":1,
+	                    "rows":1000
+                    }).then((res) => {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            const { rows } = data || {};
+                            this.replyList = rows || [];
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                    });
+                },
+                
 
                 // 请求1视频，2图片
                 async getFile({ fileType, moduleId }, callBack) {
@@ -556,7 +615,8 @@
             },
             async created () {
                 await this.getData();
-                this.detailData = this.detailList.find(e => (e.fileId || e.subjectId || e.questionId || e.postionId) == this.id);
+                this.detailData = this.detailList.find(e => (e.fileId || e.subjectId || e.questionId || e.postionId) == this.id) || {};
+                this.getReply();
                 console.log(this.detailData)
             }
         })
