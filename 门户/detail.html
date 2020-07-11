@@ -17,9 +17,10 @@
             box-sizing: border-box;
             text-decoration: none;
         }
-        body {
+        html, body {
             color: #333;
             background-color: #eee;
+            height: 100%;
         }
 
         .ellipsis {
@@ -43,7 +44,7 @@
         .li_problem {
             display: flex;
             justify-content: space-between;
-            margin-top: 100px;
+            padding-top: 100px;
         }
 
         .li_problem_left {
@@ -68,6 +69,14 @@
             border-radius: 20px;
         }
 
+        .li_problem_left_message button {
+            background-color: rgb(41, 135, 255);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            margin-left: 30px;
+        }
+
         .li_problem_title {
             padding: 10px 0;
             font-size: 24px;
@@ -82,7 +91,15 @@
         .li_problem_Reply {
             width: 100%;
             padding-top: 10px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+        }
+
+        .li_problem_Reply ul {
+            background-color: white;
+            padding: 10px;
+            margin-left: 40px;
+            border-radius: 4px;
         }
 
         .li_problem_Reply>div {
@@ -92,13 +109,22 @@
         }
 
         .li_problem_Reply li {
-            padding: 10px 10px 0 40px;
+            padding: 10px 10px 0 0px;
             font-size: 14px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ddd;
+            
+        }
+
+        .li_problem_Reply li:last-child {
+            border: 0;
         }
 
         .li_problem_Reply li p {
-            padding: 10px 0;
+            padding: 10px 10px;
+            background-color: #eee;
+            margin: 10px 40px;
+            border-radius: 3px;
+            line-height: 1.5;
         }
 
         .li_problem_Reply li span {
@@ -121,8 +147,8 @@
             display: flex;
             flex-direction: column;
             position: fixed;
-            top: 115px;
-            height: 450px;
+            top: 70px;
+            height: 600px;
             width: 250px;
             background-color: white;
             border-radius: 3px;
@@ -131,8 +157,9 @@
         .li_problem_right>div>span {
             padding: 10px;
             border-bottom: 1px solid #eee;
-            margin-bottom: 10px;
-            display: block;
+            /* margin-bottom: 10px; */
+            display: flex;
+            align-items: center;
         }
 
         .li_problem_right>div>p {
@@ -143,7 +170,7 @@
             width: 230px;
             height: 32px;
         }
-
+        
         .li_problem_right>div>p button {
             height: 100%;
             background-color: rgb(41, 135, 255);
@@ -154,6 +181,20 @@
             padding: 0 12px;
             border-radius: 3px;
         }
+        .li_problem_right>div>span button {
+            background-color: white;
+            border: 1px solid #eee;
+            /* color: white; */
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
+
+        .li_problem_right>div>span .select {
+            background-color: rgb(41, 135, 255);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
 
         .li_problem_right ul {
             flex: 1;
@@ -162,7 +203,7 @@
 
         .li_problem_right ul li {
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
-            padding: 10px;
+            padding: 8px 10px;
             background-color: white;
             margin-bottom: 10px;
             cursor: pointer;
@@ -176,7 +217,7 @@
         .page {
             display: flex;
             justify-content: flex-end;
-            padding: 10px 5px;
+            padding: 5px 10px;
             align-items: center;
         }
         .active { 
@@ -219,8 +260,10 @@
         }
         footer {
             width: 100%;
-            height: 200px;
+            height: 120px;
             background-color: #ddd;
+            /* position: absolute;
+            bottom: 0; */
         }
 
         footer .con {
@@ -240,11 +283,183 @@
         footer .con span { 
             margin: 0 10px;
         }
+
+        .popup {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            top: 0;
+            left: 0;
+            z-index: 99999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup .popup_box {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            width: 400px;
+        }
+        .popup .popup_box p {
+            display: flex;
+            align-items: center;
+        }
+
+        .popup .popup_box .popup_file {
+            /* width: 80px; */
+            overflow: hidden;
+            position: relative;
+            margin-left: 20px;
+        }
+        .popup .popup_box .popup_file button {
+            background-color: rgb(41, 135, 255);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
+        .popup .popup_box .popup_file input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+        }
+        .close {
+            position: absolute;
+            top: 17px;
+            right: 20px;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            background: url(./images/nlogin.png) no-repeat 0 0;
+        }
+        .popup_question button {
+            background-color: white;
+            border: 1px solid #eee;
+            padding: 8px 15px;
+            border-radius: 3px;
+        }
+        .popup_question .p_button {
+            background-color: rgb(41, 135, 255);
+            color: white;
+        }
+
+
+        .li_img_video {
+            display: block;
+        }
+
+        .li_img_video ul {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .li_img_video ul li {
+            height: 300px;
+            border-radius: 3px;
+            background-color: white;
+            box-shadow: 2px 5px 15px rgba(0, 0, 0, .15);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            width: calc(33.33333% - 20px);
+            margin: 10px;
+            font-size: 14px;
+            overflow: hidden;
+        }
+
+        .li_img_video ul li .coverImg {
+            flex: 1;
+            overflow: hidden;
+            /* margin-bottom: 10px; */
+            position: relative;
+            /* transition: 1s; */
+        }
+
+        .li_img_video ul li .coverImg img {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        .li_img_video ul li .coverImg var {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: url(./video/3.png);
+            cursor: pointer;
+            /* display: none; */
+        }
+        .li_img_video .page button {
+            background-color: transparent;
+        }
+
+
+        .li_img_video .filter span {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            /* margin-bottom: 10px; */
+            display: flex;
+            align-items: center;
+        }
+
+        .li_img_video .filter p {
+            margin: 10px;
+        }   
+
+        .li_img_video .filter p>input {
+            width: 230px;
+            height: 32px;
+        }
+        
+        .li_img_video .filter p button {
+            height: 100%;
+            background-color: rgb(41, 135, 255);
+            position: absolute;
+            top: 0;
+            left: 178px;
+            color: white;
+            padding: 0 12px;
+            border-radius: 3px;
+        }
+        .li_img_video .filter span button {
+            background-color: white;
+            border: 1px solid #eee;
+            /* color: white; */
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
+        .li_img_video .filter select {
+            height: 32px;
+            margin-left: 40px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        textarea {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: none;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" style="height: 100%;">
         <!-- 头部 -->
         <header>
             <div class="header_con">
@@ -257,7 +472,10 @@
                     <div class="header_con_center">
                         
                     </div>
-                    <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">{{userName}}</p>
+                    <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">
+                        <span style="color: rgb(29, 135, 42);">欢迎登陆</span>
+                        {{userName}}
+                    </p>
                     <p v-else style="cursor: pointer;" @click="showLogin = true">
                         请登录
                     </p>
@@ -267,18 +485,21 @@
         </header>
 
         <!-- 内容 -->
-        <div class="li_problem width1200">
+        <div class="li_problem width1200" style="min-height: calc(100% - 140px)" v-if="businessType != 1 && businessType != 2">
             <div class="li_problem_left">
                 <p class="li_problem_title">{{detailData.title || detailData.subjectName || detailData.questionName || detailData.postionName}}</p>
                 <div class="li_problem_left_message">
-                    创建人
+                    {{detailData.createUserName}}
                     <span style="color: rgb(180, 180, 180);margin-left: 20px;">{{detailData.createTime}}</span>
                     <span style="margin-left: 20px;" model v-if="businessType == 3 || businessType == 5">{{detailData.moduleName || detailData.companyName}}</span>
                     <span style="margin-left: 20px;" model v-if="businessType == 3">{{detailData.typeName}}</span>
+                    <button v-if="businessType == 5" @click="postionStatus != 0 ? isPostion() : ''" :style="{ opacity: postionStatus != 0 ? '' : '.5'}">
+                        {{ postionStatus != 0 ? '应聘' : '已应聘'}}
+                    </button>
                 </div>
                 <div class="li_problem_content">
                     <ul>
-                        <li v-if="businessType == 1">
+                        <!-- <li v-if="businessType == 1">
                             <div class="coverImg">
                                 <img style="width: 100%;" :src="detailData.thumbnailUrl" alt="">
                                 <var @click="beginVideo(detailData)"></var>
@@ -289,7 +510,7 @@
                                 <img :src="detailData.fileUrl || ''" alt="">
                             </div>
                             <span :title="detailData.remark" class="reSpan">{{detailData.remark || '&nbsp;'}}</span>
-                        </li>
+                        </li> -->
                         <li v-if="businessType == 3">
                             <p style="line-height: 1.75;" v-html="detailData.subjectContent"></p>
                         </li>
@@ -305,7 +526,10 @@
                     <div>回复信息</div>
                     <ul>
                         <li v-for="(item, index) in replyList">
-                            {{item.createUserName}} <span>{{item.createTime}}</span>
+                            <span style="font-size: 16px;color: #333;">
+                                {{item.createUserName}} 
+                            </span>
+                            <span>{{item.createTime}}</span>
                             <p>
                                 {{item.answerContent}}
                             </p>
@@ -315,9 +539,15 @@
             </div>
             <div class="li_problem_right">
                 <div>
-                    <span>更多{{detailData.moduleName}}</span>
-                    <p style="position: relative;">
-                        <input type="text" placeholder="请输出过滤名称" v-model="modelTitle" />
+                    <span>
+                        更多{{detailData.moduleName}}
+                        <span style="flex: 1;" v-if="businessType == 4"></span>
+                        <button @click="allQuestionPages()" :class="{ select: question === 'all' }" v-if="businessType == 4">所有问题</button>
+                        <button @click="myQuestionPages()" :class="{ select: question !== 'all' }" v-if="businessType == 4">我的问题</button>
+                    </span>
+                    <p style="position: relative;display: flex;align-items: center;">
+                        <span v-if="question !== 'all'" @click="isquestionStatus = true" title="创建问题" style="padding: 0 5px;cursor: pointer;font-size: 18px;border: 1px solid #eee;height: 100%;margin-right: 5px;display: flex;align-items: center;">+</span>
+                        <input type="text" placeholder="请输入过滤名称" v-model="modelTitle" />
                         <button @click="title = modelTitle; currentPage = 1;getData()">确定</button>
                     </p>
                     <ul>
@@ -355,19 +585,87 @@
                         </div>
                         <!--下一页-->
                         <button @click="nextPage" :disabled="currentPage == pageTotal">下一页</button>
+                        <span style="font-size: 14px;">&nbsp;共{{total}}条</span>
                     </div>
                 </div>
             </div>
         </div>
-         <!-- 底部 -->
-         <footer style="margin-top: 20px;">
+
+        <!-- 视频 && 图文内容 -->
+        <div class="li_problem width1200 li_img_video" style="min-height: calc(100% - 140px)" v-else>
+            <p style="font-size: 20px;margin-left: 10px;">
+                <!-- {{(detailList[0] || {}).moduleName}} -->
+                更多列表信息
+            </p>
+            <div style="height: auto;flex-direction: row;width: 100%;align-items: flex-end;display: flex;" class="filter">
+                <p style="position: relative;display: flex;align-items: center;">
+                    <input type="text" placeholder="请输出过滤名称" v-model="modelTitle" style="height: 32px;" />
+                    <button @click="title = modelTitle; currentPage = 1;getData()">确定</button>
+                    <select v-model="filterSelect">
+                        <option value="">请选择类型</option>
+                        <option :value="item.typeId" v-for="(item, index) in typeList">{{item.typeName}}</option>
+                    </select>
+                </p>
+            </div>
+            <ul>
+                <li v-for="(row, index) in detailList" style="cursor: pointer;position: relative;" @click="businessType == 2 ? detailImg(row) : ''">
+                    <div class="coverImg">
+                        <img :src="row.thumbnailUrl || row.fileUrl || ''" alt="">
+                        <var @click.stop="beginVideo(row)" v-if="businessType == 1"></var>
+                    </div>
+                    <!-- <div class="center">
+                        <span>{{row.title}}</span>
+                    </div> -->
+                    <span :title="row.title" class="ellipsis" style="font-size: 18px;font-weight: bold;margin: 10px 8px 0 8px;">{{row.title || '&nbsp;'}}</span>
+                    <span :title="row.remark" class="ellipsis" style="margin: 5px 10px">{{row.remark || '&nbsp;'}}</span>
+                </li>
+                <p v-if="!detailList.length" style="display: flex;justify-content: center;padding: 20px;width: 100%;">
+                    <img src="./images/no-data.png" alt="" style="width: 250px;">
+                </p>
+            </ul>
+            <div class="page" v-if="total">
+                <button @click="prePage" :disabled="currentPage == 1">上一页</button>
+                <!--总页数小于6的-->
+                <div v-if="pageTotal < showPageNo + 1">
+                    <button v-for="i in pageTotal" @click="changeCurrentPage(i)" :class="{active:i == currentPage}" :key="i">{{i}}</button>
+                </div>
+                <div v-else-if="currentPage < 4">
+                    <button v-for="i in 4" @click="changeCurrentPage(i)" :class="{active:i == currentPage}"
+                        :key="i">{{i}}</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                </div>
+                <div v-else-if="currentPage > pageTotal - 3">
+                    <button @click="changeCurrentPage(1)">1</button>
+                    <button :disabled="true">···</button>
+                    <button v-for="i in 4" @click="changeCurrentPage(i + (pageTotal - 4))"
+                        :class="{active:(i + (pageTotal - 4)) == currentPage}"
+                        :key="i">{{i + (pageTotal - 4)}}</button>
+                </div>
+                <div v-else>
+                    <button @click="changeCurrentPage(1)">1</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(currentPage - 1)">{{currentPage - 1}}</button>
+                    <button class="active">{{currentPage}}</button>
+                    <button @click="changeCurrentPage(currentPage + 1)">{{currentPage + 1}}</button>
+                    <button :disabled="true">···</button>
+                    <button @click="changeCurrentPage(pageTotal)">{{pageTotal}}</button>
+                </div>
+                <!--下一页-->
+                <button @click="nextPage" :disabled="currentPage == pageTotal">下一页</button>
+                <span style="font-size: 14px;">&nbsp;共{{total}}条</span>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <footer style="margin-top: 20px;">
             <div class="con">
                 <p style="font-size: 16px;padding: 20px;">
                     <span>人才招聘</span>
                     <span>联系我们</span>
                     <span>讲师招募</span>
                     <span>意见反馈</span>
-                    <span>友情链接</span>
+                    <span><a href="http://www.dcs218.com" target="_bank" style="color: #333;">友情链接</a></span>
                 </p>
                 <p>
                     © 2020  浙ICP备 20022907 
@@ -379,6 +677,67 @@
             </div>
         </footer>
 
+        <!-- 弹窗应聘 -->
+        <div class="popup" v-if="ispostionStatus">
+            <div class="popup_box" style="position: relative;">
+                <p>
+                    <span style="font-size: 14px;">请上传简历：</span>
+                    <span class="popup_file">
+                        <button>选择文件</button>
+                        <input type="file" name="Files" @change="postion" />
+                    </span>
+                </p>
+                <p style="margin-top: 20px;">
+                    <span style="font-size: 14px;">可上传类型：</span>
+                    <span style="font-size: 14px;color: #aaa;margin-left: 20px;">
+                        doc/docx/ppt/pptx/pdf
+                    </span>
+                </p>
+                
+                <div class="close" @click="ispostionStatus = false"></div>
+            </div>
+        </div>
+        <!-- 弹窗问题创建 -->
+        <div class="popup popup_question" v-if="isquestionStatus">
+            <div class="popup_box" style="position: relative;">
+                <p style="margin-top: 20px;">
+                    <span style="font-size: 14px;"><span style="color: red;">*</span>问题名称：</span>
+                    <input type="text" style="height: 32px;flex: 1;" placeholder="请输入问题名称" v-model="questionObj.questionName">
+                </p>
+                <p v-if="!questionObj.questionName" style="margin-top: 5px">
+                    <span style="font-size: 14px; visibility: hidden;"><span style="color: red;">*</span>问题名称：</span>
+                    <span style="color: red;font-size: 12px;">请输入问题名称</span>
+                </p>
+                <p style="margin-top: 20px;align-items: flex-start;">
+                    <span style="font-size: 14px;"><span style="color: red;">*</span>问题内容：</span>
+                    <textarea style="height: 200px;flex: 1;" v-model="questionObj.questionContent"></textarea>
+                </p>
+                <p v-if="!questionObj.questionContent" style="margin-top: 5px">
+                    <span style="font-size: 14px; visibility: hidden;"><span style="color: red;">*</span>问题内容：</span>
+                    <span style="color: red;font-size: 12px;">请输入问题内容</span>
+                </p>
+                <p style="justify-content: flex-end;padding: 20px 0 0 0;">
+                    <button class="p_button" 
+                        :style="{ opacity: questionObj.questionName && questionObj.questionContent ? '' : '.5' }" 
+                        @click="questionObj.questionName && questionObj.questionContent ? addQuestion() : ''"
+                    >创建</button>
+                    <button @click="isquestionStatus = false">取消</button>
+                </p>
+                <div class="close" @click="isquestionStatus = false"></div>
+            </div>
+        </div>
+
+        <!-- 弹窗图文 -->
+        <div class="popup popup_img" v-if="isimgStatus" @click="isimgStatus = false">
+            <div class="popup_box" @click.stop="" style="max-width: 90%;width: auto;max-height: 90%;min-height: 200px;overflow: auto;background-color: white;position: relative;padding-top: 40px;">
+                <span :title="imgObj.title" class="reSpan" style="font-size: 20px;margin-bottom: 20px;display: inline-block;">{{imgObj.title || '&nbsp;'}}</span>
+                <div class="coverImg">
+                    <img :src="imgObj.fileUrl || ''" alt="" style="max-width: 100%;">
+                </div>
+                <span :title="imgObj.remark" class="reSpan">{{imgObj.remark || '&nbsp;'}}</span>
+                <div class="close" @click="isimgStatus = false"></div>
+            </div>
+        </div>
         <iframe src="./login.html" v-if="showLogin"></iframe>
         <iframe src="./video.html" v-if="isVideo"></iframe>
     </div>
@@ -402,12 +761,32 @@
 
                 total: 0,
                 currentPage: sessionStorage.getItem('currentPage') || 1,
-                pageSize: 6,
+                pageSize: sessionStorage.getItem('businessType') == 1 || sessionStorage.getItem('businessType') == 2 ? 9 : 10,
                 showPageNo: 6,
 
                 detailData: {},  // 左边数据
                 detailList: [],  // 右边列表数据
-                replyList: [] // 回复列表
+                replyList: [], // 回复列表
+
+                postionStatus: 0, // 应聘状态
+                ispostionStatus: false, // 应聘弹窗
+
+                question: 'all',  // 我的问题-全部问题切换
+                isquestionStatus: false,  // 问题弹窗
+                questionObj: { // 创建问题 数据
+                    questionName: '',
+                    questionContent: ''
+                },
+
+                isimgStatus: false, // 图文弹窗开关
+                imgObj: { // 图文弹窗 数据
+
+                },
+
+                typeList: [  // 分类列表
+
+                ],
+                filterSelect: '' // 下拉过滤
             },
             computed: {
                 pageTotal() {
@@ -475,6 +854,25 @@
                     this.id = row.fileId || row.subjectId || row.questionId || row.postionId;
                     sessionStorage.setItem('currentPage', this.currentPage);
                     sessionStorage.setItem('id', this.id);
+                    if(this.businessType == 4) this.getReply();
+                    if(this.businessType == 5) this.postionAccept();
+                },
+                
+                // 获取type
+                async getTypeList() {
+                    const { questionId } = this.detailData;
+                    await this.$http.get(urlAll.typeList + '/' + this.businessType).then((res) => {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            this.typeList = data || [];
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                    });
                 },
 
                 // 请求当前数据列表
@@ -519,11 +917,14 @@
                             const { rows } = data || {};
                             this.replyList = rows || [];
                         }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
                     }, function () {
                         callBack && callBack('请求失败');
                     });
                 },
-                
 
                 // 请求1视频，2图片
                 async getFile({ fileType, moduleId }, callBack) {
@@ -532,12 +933,17 @@
                         title: this.title, //视频标题
                         fileType,  //文件类型 1视频，2图片，3文档
                         moduleId, //模块ID
+                        typeId: this.filterSelect, // 分类
                         page: this.currentPage,
-                        rows: this.showPageNo
+                        rows: this.pageSize
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
                             callBack && callBack(data);
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
                         }
                     }, function () {
                         console.log('请求失败处理');
@@ -547,45 +953,60 @@
                 async getSubjectPages({ moduleId }, callBack) {
                     ajaxHttp();
                     await this.$http.post(urlAll.subjectPages, {
+                        moduleId,
                         subjectName: this.title,
                         page: this.currentPage,
-                        rows: this.showPageNo
+                        rows: this.pageSize
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
                             callBack && callBack(data);
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
                         }
                     }, function () {
                         console.log('请求失败处理');
                     });
                 },
                 // 请求问题
-                async getQuestionPages({}, callBack) {
+                async getQuestionPages({ moduleId }, callBack) {
                     ajaxHttp();
-                    await this.$http.post(urlAll.questionPages, {
+                    await this.$http.post(this.question === 'all' ? urlAll.questionPages : urlAll.myQuestions, {
+                        moduleId,
                         questionName: this.title,
                         page: this.currentPage,
-                        rows: this.showPageNo
+                        rows: this.pageSize
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
                             callBack && callBack(data);
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
                         }
                     }, function () {
                         console.log('请求失败处理');
                     });
                 },
                 // 请求职位
-                async getPostionPages({  }, callBack) {
+                async getPostionPages({ moduleId }, callBack) {
                     ajaxHttp();
                     await this.$http.post(urlAll.postionPages, {
+                        moduleId,
                         companyName: this.title,
                         page: this.currentPage,
-                        rows: this.showPageNo
+                        rows: this.pageSize
                     }).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
                             callBack && callBack(data);
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
                         }
                     }, function () {
                         console.log('请求失败处理');
@@ -597,10 +1018,11 @@
                     this.videoImg = item.thumbnailUrl;
                     this.isVideo = true;
                 },
-                prePage() {
+                async prePage() {
                     this.currentPage -= 1;
                     // sessionStorage.setItem('currentPage', this.currentPage);
-                    this.getData();
+                    await this.getData();
+                    // if(this.businessType == 4) this.getReply();
                 },
                 nextPage() {
                     this.currentPage = +this.currentPage + 1;
@@ -611,13 +1033,108 @@
                     this.currentPage = i;
                     // sessionStorage.setItem('currentPage', this.currentPage );
                     this.getData();
+                },
+                // 查询本人是否应聘过
+                postionAccept() {
+                    ajaxHttp();
+                    this.$http.get(urlAll.postionId + '/' + this.detailData.postionId).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            const { status } = data || {};
+                            this.postionStatus = status;
+                        } else {
+                            alert(message);
+                            this.postionStatus = '1';
+                            if (code == 350) {
+                                this.loginOut();
+                            }
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                },
+                // 应聘-检查是否登录
+                isPostion() {
+                    if(this.userName) return this.ispostionStatus = true;
+                    this.showLogin = true;
+                },
+                // 应聘
+                async postion(e) {
+                    ajaxHttp();
+                    var formData = new FormData();
+                    formData.append('postionId', this.detailData.postionId);
+                    formData.append('file', e.target.files[0]);
+                    await this.$http.post(urlAll.acceptPostion, formData).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            this.postionStatus = '0';
+                            this.ispostionStatus = false;
+                            alert('简历投递成功')
+                        } else {
+                            alert(message);
+                            if (code == 350) {
+                                this.loginOut();
+                            }
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                },
+                // 我的问题-检查是否登录
+                myQuestionPages() {
+                    if(!this.userName) return this.showLogin = true;
+                    this.modelTitle = '';
+                    this.title = '';
+                    this.currentPage = 1;
+                    this.question = '';
+                    this.getData();
+                },
+                // 所有问题
+                allQuestionPages() {
+                    this.modelTitle = '';
+                    this.title = '';
+                    this.currentPage = 1;
+                    this.question = 'all';
+                    this.getData();
+                },
+                // 创建问题
+                async addQuestion() {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.save, this.questionObj).then(function (res) {
+                        const { code, data, message } = res.body;
+                        if(code == 200) {
+                            alert('创建成功');
+                            this.isquestionStatus = false;
+                            this.currentPage = 1;
+                            this.getData();
+                        } else {
+                            alert(message);
+                            if (code == 350) {
+                                this.loginOut();
+                            }
+                        }
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
+                },
+                // 图文详情 弹窗
+                detailImg(row) {
+                    this.isimgStatus = true;
+                    this.imgObj = row;
                 }
             },
             async created () {
                 await this.getData();
                 this.detailData = this.detailList.find(e => (e.fileId || e.subjectId || e.questionId || e.postionId) == this.id) || {};
-                this.getReply();
+                if(this.businessType == 4) this.getReply();
+                if(this.businessType == 5) this.postionAccept();
+                if(this.businessType == 1 || this.businessType == 2) this.getTypeList();
                 console.log(this.detailData)
+            },
+            watch: {
+                filterSelect() {
+                    this.getData();
+                }
             }
         })
     </script>

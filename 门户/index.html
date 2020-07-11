@@ -92,7 +92,7 @@
             bottom: 0;
             width: 100%;
             height: 40px;
-            text-align: Center;
+            text-align: center;
         }
 
         .banner .status span {
@@ -193,7 +193,7 @@
             overflow: hidden;
             /* margin-bottom: 10px; */
             position: relative;
-            transition: 1s;
+            /* transition: 1s; */
         }
 
         .video ul li .coverImg img {
@@ -216,9 +216,9 @@
             /* display: none; */
         }
 
-        [imgC]:hover .coverImg {
+        /* [imgC]:hover .coverImg {
             transform: scale(1.2);
-        }
+        } */
         /* .video ul li .coverImg:hover var {
             display: block;
             animation: video .5s alternate;
@@ -248,7 +248,7 @@
 
         footer {
             width: 100%;
-            height: 200px;
+            height: 120px;
             background-color: #ddd;
         }
 
@@ -301,6 +301,8 @@
             max-height: 200px;
             padding: 20px;
             font-size: 24px;
+            overflow: hidden;
+            position: relative
         }
 
         .center {
@@ -317,6 +319,16 @@
             color: white;
             font-size: 18px;
         }
+        .center span {
+            display: block;
+            padding: 0 10px;
+            width: 100%;
+            max-height: 50%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -332,18 +344,20 @@
                 <div>
                     <div class="header_con_center">
                         <p>
-                            <span v-for="(item, index) in moduleList.slice(0, 8)"
+                            <span v-for="(item, index) in moduleList.slice(0, headerShowNum)"
                                 :class="{ activeSelect: headerIndex === index }"
                                 @click="positionClick(index)">{{item.moduleName}}</span>
                         </p>
-                        <p header_con_t v-if="moduleList.length > 8">
-                            <span v-for="(item, index) in moduleList.slice(8, moduleList.length)"
-                                :class="{ activeSelect: headerIndex === index + 8 }"
-                                @click="positionClick(index + 8)">{{item.moduleName}}</span>
+                        <p header_con_t v-if="moduleList.length > headerShowNum">
+                            <span v-for="(item, index) in moduleList.slice(headerShowNum, moduleList.length)"
+                                :class="{ activeSelect: headerIndex === index + headerShowNum }"
+                                @click="positionClick(index + headerShowNum)">{{item.moduleName}}</span>
                         </p>
                     </div>
                     <p v-if="!!userName" @click="isLoginOut = !isLoginOut" style="padding-right: 5px;cursor: pointer;">
-                        {{userName}}</p>
+                        <span style="color: rgb(29, 135, 42);">欢迎登陆</span>
+                        {{userName}}
+                    </p>
                     <p v-else style="cursor: pointer;" @click="showLogin = true">
                         请登录
                     </p>
@@ -380,65 +394,74 @@
             <div v-if="item.businessType == 1">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length"
                         @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)">
+                    <li v-for="(row, index) in item.children || []" style="cursor: auto">
                         <div class="coverImg">
                             <img :src="row.thumbnailUrl" alt="">
                             <var @click.stop="beginVideo(row)"></var>
                         </div>
                         <span :title="row.title" class="reSpan">{{row.title}}</span>
                     </li>
-                    <p v-if="!(item.children || []).length"
-                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                        <img src="./images/no-data.png" alt="" style="width: 250px;">
+                    </p>
                 </ul>
             </div>
             <!-- 图文 -->
             <div v-if="item.businessType == 2">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length"
                         @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul>
-                    <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)" style="cursor: pointer;position: relative;padding: 0;height: 200px;" imgC>
+                    <li v-for="(row, index) in item.children || []" style="cursor: auto;position: relative;" imgC>
                         <div class="coverImg">
                             <img :src="row.fileUrl || ''" alt="">
                         </div>
-                        <div class="center">
-                            {{row.title}}
-                        </div>
-                        <!-- <span :title="row.title" class="ellipsis" style="font-size: 18px;font-weight: bold;margin: 5px 8px;">{{row.title || '&nbsp;'}}</span> -->
-                        <!-- <span :title="row.remark" class="ellipsis" style="margin: 5px 10px">{{row.remark || '&nbsp;'}}</span> -->
+                        <!-- <div class="center">
+                            <span>{{row.title}}</span>
+                        </div> -->
+                        <span :title="row.title" class="ellipsis" style="font-size: 18px;font-weight: bold;margin: 10px 8px 0 8px;">{{row.title || '&nbsp;'}}</span>
+                        <span :title="row.remark" class="ellipsis" style="margin: 5px 10px">{{row.remark || '&nbsp;'}}</span>
                     </li>
-                    <p v-if="!(item.children || []).length"
-                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                        <img src="./images/no-data.png" alt="" style="width: 250px;">
+                    </p>
                 </ul>
             </div>
             <!-- 文章 -->
             <div v-if="item.businessType == 3">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length"
                         @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
                     <li v-for="(row, index) in item.children || []" @click="toDetail(item, row)"
                         style="cursor: pointer;">
-                        <p style="text-align: left;">{{row.subjectName}}</p>
-                        <p class="ellipsis" v-html="row.subjectContent"></p>
+                        <p style="text-align: left;" class="ellipsis" :title="row.subjectName">{{row.subjectName}}</p>
+                        <span style="padding: 0 20px;color: #aaa;">
+                            {{row.createUserName}} &nbsp;
+                            {{row.createTime}}
+                        </span>
+                        <p class="ellipsis">
+                            {{row.remark}}
+                        </p>
                     </li>
-                    <p v-if="!(item.children || []).length"
-                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                        <img src="./images/no-data.png" alt="" style="width: 250px;">
+                    </p>
                 </ul>
             </div>
             <!-- 问题 -->
             <div v-if="item.businessType == 4">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length"
                         @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
@@ -447,15 +470,16 @@
                         <p style="text-align: left;">{{row.questionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.questionContent"></p>
                     </li>
-                    <p v-if="!(item.children || []).length"
-                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                        <img src="./images/no-data.png" alt="" style="width: 250px;">
+                    </p>
                 </ul>
             </div>
             <!-- 招聘 -->
             <div v-if="item.businessType == 5">
                 <p>
                     {{item.moduleName}}
-                    <a href="javascript:viod(0);" v-if="(item.children || []).length > 5"
+                    <a href="javascript:viod(0);" v-if="(item.children || []).length"
                         @click="toDetail(item, item.children[0])">更多{{item.moduleName}}</a>
                 </p>
                 <ul class="article">
@@ -464,8 +488,9 @@
                         <p style="text-align: left;">{{row.postionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.remark"></p>
                     </li>
-                    <p v-if="!(item.children || []).length"
-                        style="text-align: center;padding: 20px;width: 100%;color: #aaa;">暂无数据</p>
+                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                        <img src="./images/no-data.png" alt="" style="width: 250px;">
+                    </p>
                 </ul>
             </div>
 
@@ -479,7 +504,7 @@
                     <span>联系我们</span>
                     <span>讲师招募</span>
                     <span>意见反馈</span>
-                    <span>友情链接</span>
+                    <span><a href="http://www.dcs218.com" target="_bank" style="color: #333;">友情链接</a></span>
                 </p>
                 <p>
                     © 2020 浙ICP备 20022907
@@ -506,6 +531,7 @@
                 userName: userName || '', // 当前用户
 
                 headerIndex: 0, // 头部定位脚标
+                headerShowNum: 7,  // 头部显示几条数据
 
                 isShow: false,
 
@@ -617,17 +643,28 @@
                                 });
                             });
                         }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
                     }, function () {
                         console.log('请求失败处理');
                     });
                     // console.log(this.moduleList);
                     setTimeout(() => {
                         this.bannerList = (this.moduleList.find(item => item.businessType == 2 && item.orders == 1) || {}).children || [];
+
+                        console.log(this.bannerList)
+
                         this.$set(this.moduleList, 0, this.moduleList[0]);
+                        
+                        setTimeout(() => {
+                            this.isShow = true;
+                        }, 300)
                         this.int(4000);
                         this.winScroll();
-                        window.addEventListener('scroll', this.winScroll);
-                        this.isShow = true;
+                        window.onmousewheel = document.onmousewheel = this.winScroll;
+                        
                     }, 100);
                 },
                 // 请求1视频，2图片
@@ -645,6 +682,10 @@
                         if (code == 200) {
                             callBack && callBack(data);
                         }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
                     }, function () {
                         console.log('请求失败处理');
                     });
@@ -661,6 +702,10 @@
                         if (code == 200) {
                             callBack && callBack(data);
                         }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
                     }, function () {
                         console.log('请求失败处理');
                     });
@@ -676,6 +721,10 @@
                         if (code == 200) {
                             callBack && callBack(data);
                         }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
+                        }
                     }, function () {
                         console.log('请求失败处理');
                     });
@@ -690,6 +739,10 @@
                         const { code, data, message } = res.body;
                         if (code == 200) {
                             callBack && callBack(data);
+                        }
+                        if (code == 350) {
+                            alert(message);
+                            this.loginOut();
                         }
                     }, function () {
                         console.log('请求失败处理');
@@ -731,7 +784,6 @@
                     var startStep = 0;
                     var endStep = 10;
                     var everyStep = (end - start) / (endStep - startStep);
-                    console.log(everyStep)
                     var timer = setInterval(() => {
                         startStep++;
                         if (startStep == endStep) {
@@ -741,6 +793,7 @@
                         start += everyStep;
                         document.documentElement.scrollTop = start;
                     }, 40);
+                    this.headerIndex = i;
                 },
                 // 鼠标移入状态圆点
                 changeBanner(index) {

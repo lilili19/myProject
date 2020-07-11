@@ -50,7 +50,7 @@ var obj2 = {
     // 5、模块列表
     moduleList: host + '/open/moduleList',
     // 6、所属分类列表
-    typeList: host + '/type/list/1',
+    typeList: host + '/open/typeList',
     // 7、视频信息分页 
     videoPages: host + '/open/videoPages',
     // 8、图片信息分页  
@@ -66,11 +66,11 @@ var obj2 = {
     // 13、问题创建 
     save: host + '/question/save',
     // 14、问题的回复记录 
-    pages: host + '/questionAnswer/pages',
+    pages: host + '/open/questionAnswer/pages',
     // 15、用户应聘职位 
     acceptPostion: host + '/postionAccept/acceptPostion',
     // 16、查询本人是否应聘过 
-    postionId: host + '/postionAccept/acceptPostion'
+    postionId: host + '/postionAccept/get'
 }
 
 
@@ -79,5 +79,5 @@ var urlAll = env === 'test' ? obj1 : obj2;
 function ajaxHttp() {
     var user = JSON.parse(localStorage.getItem('user') || '{}');
     const { token } = user;
-    Vue.http.headers.common['token'] = token;
+    Vue.http.headers.common['Authorization'] = token;
 }

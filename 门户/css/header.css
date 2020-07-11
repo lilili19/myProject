@@ -43,6 +43,7 @@ header .loginOut {
     border-radius: 3px;
     cursor: pointer;
     font-size: 14px;
+    border: 1px solid #eee;
 }
 header .loginOut:hover {
     color: rgb(255, 88, 88);
@@ -63,7 +64,7 @@ header .header_con>div {
 }
 
 header .header_con>div span {
-    width: 100px;
+    width: 108px;
     cursor: pointer;
     display: inline-block;
     text-align: center;

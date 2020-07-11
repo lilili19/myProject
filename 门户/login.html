@@ -966,7 +966,7 @@
                             <p class="rlf-tip-wrap errorHint color-red"
                                 style="color: red;height: auto;padding-left: 5px;display: none;">请输入正确验证码</p>
                         </div>
-                        <div class="rlf-group rlf-appendix form-control  clearfix" style="text-align: right"
+                        <div class="rlf-group rlf-appendix form-control  clearfix" style="text-align: right; display: none;"
                             findPassword>
                             <a href="/user/newforgot" class="rlf-forget r" target="_blank" hidefocus="true"
                                 style="text-decoration: none;font-size: 14px;">修改密码</a>
@@ -998,7 +998,7 @@
             span[type].className = 'active-title';
             document.querySelector('[login]').value = span[type].innerHTML;
             if (type == 0) {
-                document.querySelector('[findPassword]').style.display = 'block';
+                // document.querySelector('[findPassword]').style.display = 'block';
                 document.querySelector('[checked="3"]').parentNode.style.display = 'none';
                 document.querySelector('[checked="4"]').parentNode.style.display = 'none';
                 document.querySelector('[checked="5"]').parentNode.style.display = 'block';
@@ -1014,17 +1014,49 @@
         var checked = form.querySelectorAll('[checked]');
         function login() {
             document.querySelector('[loginError]').innerHTML = '';
+            checked[0].parentNode.querySelector('p').innerText = '请输入登录账号';
+            checked[1].parentNode.querySelector('p').innerText = '请输入密码';
+            checked[2].parentNode.querySelector('p').innerText = '请输入手机号';
+            checked[3].parentNode.querySelector('p').innerText = '请输入邮箱';
             for (let index = 0; index < checked.length; index++) {
                 const element = checked[index];
                 if (!element.value && element.parentNode.style.display !== 'none') return element.parentNode.querySelector('p').style.display = 'block';
                 else element.parentNode.querySelector('p').style.display = 'none';
             }
+            var span = document.querySelector('.rl-modal-header').querySelectorAll('span');
+            if(span[0].className == '') {
+                if(checked[0].value.length < 6) {
+                    checked[0].parentNode.querySelector('p').innerText = '用户登录名最少6位';
+                    return checked[0].parentNode.querySelector('p').style.display = 'block';
+                }
+                if(checked[0].value.length > 15) {
+                    checked[0].parentNode.querySelector('p').innerText = '用户登录名最长15位';
+                    return checked[0].parentNode.querySelector('p').style.display = 'block';
+                }
+                if(checked[1].value.length < 6) {
+                    checked[1].parentNode.querySelector('p').innerText = '登录密码最少6位';
+                    return checked[1].parentNode.querySelector('p').style.display = 'block';
+                }
+                if(checked[1].value.length > 15) {
+                    checked[1].parentNode.querySelector('p').innerText = '登录密码最长15位';
+                    return checked[1].parentNode.querySelector('p').style.display = 'block';
+                }
+                if(!isPhone(checked[2].value)) {
+                    checked[2].parentNode.querySelector('p').innerText = '请输入正确的手机号码';
+                    return checked[2].parentNode.querySelector('p').style.display = 'block';
+                }
+                if(!checkEmail(checked[3].value)) {
+                    checked[3].parentNode.querySelector('p').innerText = '请输入正确的邮箱';
+                    return checked[3].parentNode.querySelector('p').style.display = 'block';
+                }
+            }
+            
             window.parent.app.login({
                 userName: checked[0].value,
                 password: checked[1].value,
                 captchaCode: checked[4].value,
-                email: checked[2].value,
-                mobile: checked[3].value,
+                email: checked[3].value,
+                mobile: checked[2].value,
                 type: document.querySelector('[login]').value === document.querySelector('.rl-modal-header').querySelectorAll('span')[0].innerHTML ? 0 : 1
             }, function (error) {
                 document.querySelector('[loginError]').innerHTML = error;
@@ -1051,7 +1083,7 @@
             }
         }
         // 邮箱验证
-        function check(text) {
+        function checkEmail(text) {
             var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
             if (!reg.test(text)) { //正则验证不通过，格式不对
                 return false;
