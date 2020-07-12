@@ -348,7 +348,7 @@
                                 :class="{ activeSelect: headerIndex === index }"
                                 @click="positionClick(index)">{{item.moduleName}}</span>
                         </p>
-                        <p header_con_t v-if="moduleList.length > headerShowNum">
+                        <p header_con_t v-if="moduleList.length > headerShowNum" style="background-color: rgb(43, 48, 59);color: white;">
                             <span v-for="(item, index) in moduleList.slice(headerShowNum, moduleList.length)"
                                 :class="{ activeSelect: headerIndex === index + headerShowNum }"
                                 @click="positionClick(index + headerShowNum)">{{item.moduleName}}</span>
@@ -405,7 +405,7 @@
                         </div>
                         <span :title="row.title" class="reSpan">{{row.title}}</span>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                    <p v-if="item.children && !(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
                         <img src="./images/no-data.png" alt="" style="width: 250px;">
                     </p>
                 </ul>
@@ -428,7 +428,7 @@
                         <span :title="row.title" class="ellipsis" style="font-size: 18px;font-weight: bold;margin: 10px 8px 0 8px;">{{row.title || '&nbsp;'}}</span>
                         <span :title="row.remark" class="ellipsis" style="margin: 5px 10px">{{row.remark || '&nbsp;'}}</span>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                    <p v-if="item.children && !(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
                         <img src="./images/no-data.png" alt="" style="width: 250px;">
                     </p>
                 </ul>
@@ -452,7 +452,7 @@
                             {{row.remark}}
                         </p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                    <p v-if="item.children && !(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
                         <img src="./images/no-data.png" alt="" style="width: 250px;">
                     </p>
                 </ul>
@@ -470,7 +470,7 @@
                         <p style="text-align: left;">{{row.questionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.questionContent"></p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                    <p v-if="item.children &&  !(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
                         <img src="./images/no-data.png" alt="" style="width: 250px;">
                     </p>
                 </ul>
@@ -488,7 +488,7 @@
                         <p style="text-align: left;">{{row.postionName}}</p>
                         <p class="ellipsis" style="font-size: 16px;" v-html="row.remark"></p>
                     </li>
-                    <p v-if="!(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
+                    <p v-if="item.children &&  !(item.children || []).length" style="text-align: center;padding: 20px;width: 100%;color: #aaa;">
                         <img src="./images/no-data.png" alt="" style="width: 250px;">
                     </p>
                 </ul>
@@ -533,7 +533,7 @@
                 headerIndex: 0, // 头部定位脚标
                 headerShowNum: 7,  // 头部显示几条数据
 
-                isShow: false,
+                isShow: true,
 
                 showLogin: false, // 登录开关
                 isLoginOut: false, // 登出开关
@@ -615,7 +615,7 @@
                         if (code == 200) {
                             this.moduleList = data || [];
                             this.moduleList.forEach(element => {
-                                element.children = [];
+                                // element.children = [];
                                 const { fileType, moduleId, orders } = element || {};
                                 let fun;
                                 switch (+element.businessType) {
@@ -658,9 +658,9 @@
 
                         this.$set(this.moduleList, 0, this.moduleList[0]);
                         
-                        setTimeout(() => {
+                        // setTimeout(() => {
                             this.isShow = true;
-                        }, 300)
+                        // }, 100)
                         this.int(4000);
                         this.winScroll();
                         window.onmousewheel = document.onmousewheel = this.winScroll;

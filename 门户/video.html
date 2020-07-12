@@ -21,9 +21,15 @@
             align-items: center;
             justify-content: center;
         }
+        /* .video>div {
+            max-width: 90%;
+            max-height: 90%;
+        } */
+
         video {
             max-width: 90%;
             max-height: 90%;
+            position: relative;
         }
 
         video::-internal-media-controls-download-button {
@@ -49,15 +55,18 @@
 </head>
 <body>
     <div class="video">
-        <!-- <video src="./video/1.mp4" controls muted></video> -->
+        <video src="./video/1.mp4" controls muted></video>
     </div>
-    <div class="close" onclick="window.parent.app.isVideo = false">
-        
-    </div>
+    <div class="close" onclick="window.parent.app.isVideo = false"></div>
     <script>
-        // var href = window.location.href.split('?')[1] || '';
-        // var src = href.split('=')[1] || '';
-        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' controls poster="' + window.parent.app.videoImg + '" controlslist="nodownload"></video>'
+        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' poster="' + window.parent.app.videoImg + '" controls controlslist="nodownload noremoteplayback"></video>';
+        document.querySelector('video')['disablePictureInPicture'] = true;
+        // document.querySelector('video').onloadstart= function() {
+            // console.log(this.offsetWidth, this.offsetHeight)
+        // }
+        // document.querySelector('video').onload = function() {
+        //     debugger
+        // }
     </script>
 </body>
 </html>

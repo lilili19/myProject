@@ -684,7 +684,7 @@
                     <span style="font-size: 14px;">请上传简历：</span>
                     <span class="popup_file">
                         <button>选择文件</button>
-                        <input type="file" name="Files" @change="postion" />
+                        <input type="file" name="Files" @change="userName ? postion() : ''" />
                     </span>
                 </p>
                 <p style="margin-top: 20px;">
@@ -1127,7 +1127,7 @@
                 await this.getData();
                 this.detailData = this.detailList.find(e => (e.fileId || e.subjectId || e.questionId || e.postionId) == this.id) || {};
                 if(this.businessType == 4) this.getReply();
-                if(this.businessType == 5) this.postionAccept();
+                if(this.businessType == 5 && this.userName) this.postionAccept();
                 if(this.businessType == 1 || this.businessType == 2) this.getTypeList();
                 console.log(this.detailData)
             },
