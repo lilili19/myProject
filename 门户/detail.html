@@ -857,7 +857,7 @@
                     sessionStorage.setItem('currentPage', this.currentPage);
                     sessionStorage.setItem('id', this.id);
                     if(this.businessType == 4) this.getReply();
-                    if(this.businessType == 5) this.postionAccept();
+                    if(this.businessType == 5 && this.userName) this.postionAccept();
                 },
                 
                 // 获取type
