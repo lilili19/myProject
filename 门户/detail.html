@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>详情页</title>
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/common.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
     <script src="./js/config.js"></script>
@@ -816,8 +817,9 @@
                                 const { userName } = data || {};
                                 this.userName = userName;
                                 this.showLogin = false;
+                                window.location.reload();
                             } else {
-                                alert('注册成功');
+                                messageTips('success', '注册成功');
                                 // localStorage.setItem('user', JSON.stringify(data));
                                 // const { userName } = data || {};
                                 // this.userName = userName;
@@ -867,7 +869,7 @@
                             this.typeList = data || [];
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -918,7 +920,7 @@
                             this.replyList = rows || [];
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -942,7 +944,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -963,7 +965,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -984,7 +986,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -1005,7 +1007,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -1043,7 +1045,7 @@
                             const { status } = data || {};
                             this.postionStatus = status;
                         } else {
-                            alert(message);
+                            messageTips('error', message);
                             this.postionStatus = '1';
                             if (code == 350) {
                                 this.loginOut();
@@ -1069,9 +1071,9 @@
                         if(code == 200) {
                             this.postionStatus = '0';
                             this.ispostionStatus = false;
-                            alert('简历投递成功')
+                            messageTips('success', '简历投递成功');
                         } else {
-                            alert(message);
+                            messageTips('error', message);
                             if (code == 350) {
                                 this.loginOut();
                             }
@@ -1103,12 +1105,12 @@
                     await this.$http.post(urlAll.save, this.questionObj).then(function (res) {
                         const { code, data, message } = res.body;
                         if(code == 200) {
-                            alert('创建成功');
+                            messageTips('success', '创建成功');
                             this.isquestionStatus = false;
                             this.currentPage = 1;
                             this.getData();
                         } else {
-                            alert(message);
+                            messageTips('error', message);
                             if (code == 350) {
                                 this.loginOut();
                             }

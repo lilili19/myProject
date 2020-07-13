@@ -55,12 +55,12 @@
 </head>
 <body>
     <div class="video">
-        <video src="./video/1.mp4" controls muted></video>
+        <!-- <video src="./video/1.mp4" controls muted></video> -->
     </div>
-    <div class="close" onclick="window.parent.app.isVideo = false"></div>
+    <!-- <div class="close" onclick="window.parent.app.isVideo = false"></div> -->
     <script>
-        document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' poster="' + window.parent.app.videoImg + '" controls controlslist="nodownload noremoteplayback"></video>';
-        document.querySelector('video')['disablePictureInPicture'] = true;
+        // document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' poster="' + window.parent.app.videoImg + '" controls controlslist="nodownload noremoteplayback"></video>';
+        // document.querySelector('video')['disablePictureInPicture'] = true;
         // document.querySelector('video').onloadstart= function() {
             // console.log(this.offsetWidth, this.offsetHeight)
         // }

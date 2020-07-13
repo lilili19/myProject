@@ -81,3 +81,84 @@ function ajaxHttp() {
     const { token } = user;
     Vue.http.headers.common['Authorization'] = token;
 }
+
+var liMessage = {
+    successHtml: function (content) {
+        return '<div class="li_icon_success">'
+            + '<img src="./images/success.png" style="height: 13px;" />'
+            + '<p></p>'
+            + '<div class="li_moban">'
+            + '<div></div>'
+            + '</div>'
+            + '</div>'
+            + '<span>' + content + '</span>';
+    },
+    errorHtml: function (content) {
+        return '<div class="li_icon_success li_icon_error">'
+            + '<div class="li_error li_error1"></div>'
+            + '<div class="li_error_moban li_1"></div>'
+            + '<div class="li_error li_error2"></div>'
+            + '<div class="li_error_moban li_2"></div>'
+            + '</div>'
+            + '<span>' + content + '</span>';
+    },
+    infoHtml: function (content) {
+        return '<div class="li_icon_info">'
+            + '<img src="./images/info.png" style="height: 16px;" />'
+            + '</div>'
+            + '<span>' + content + '</span>';
+    },
+    success: function (obj, callBack) {
+        if (typeof (obj) === "string") {
+            obj = {
+                content: obj,
+                time: 3000
+            }
+        }
+        var div = document.createElement('div');
+        div.className = 'li_messageTips';
+        div.innerHTML = this.successHtml(obj.content || '');
+        document.body.appendChild(div);
+        this.timeOut(obj.time || 3000, div, callBack);
+    },
+    error: function (obj, callBack) {
+        if (typeof (obj) === "string") {
+            obj = {
+                content: obj,
+                time: 3000
+            }
+        }
+        var div = document.createElement('div');
+        div.className = 'li_messageTips';
+        div.innerHTML = this.errorHtml(obj.content || '');
+        document.body.appendChild(div);
+        this.timeOut(obj.time || 3000, div, callBack);
+    },
+    info: function (obj, callBack) {
+        if (typeof (obj) === "string") {
+            obj = {
+                content: obj,
+                time: 3000
+            }
+        }
+        var div = document.createElement('div');
+        div.className = 'li_messageTips';
+        div.innerHTML = this.infoHtml(obj.content || '');
+        document.body.appendChild(div);
+        this.timeOut(obj.time || 3000, div, callBack);
+    },
+    timeOut: function (time, div, callBack) {
+        setTimeout(function () {
+            div.style.opacity = 0;
+            div.style.animation = 'li_messageTips_time 0.3s linear';
+            setTimeout(function () {
+                document.body.removeChild(div);
+                callBack && callBack();
+            }, 300)
+        }, time);
+    }
+}
+
+function messageTips(type, content, callBack) {
+    liMessage[type](content, callBack);
+}

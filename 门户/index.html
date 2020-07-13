@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>主页</title>
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/common.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
     <script src="./js/config.js"></script>
@@ -575,7 +576,7 @@
                                 this.userName = userName;
                                 this.showLogin = false;
                             } else {
-                                alert('注册成功');
+                                messageTips('success', '注册成功');
                                 // localStorage.setItem('user', JSON.stringify(data));
                                 // const { userName } = data || {};
                                 // this.userName = userName;
@@ -644,7 +645,7 @@
                             });
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -683,7 +684,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -703,7 +704,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -722,7 +723,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {
@@ -741,7 +742,7 @@
                             callBack && callBack(data);
                         }
                         if (code == 350) {
-                            alert(message);
+                            messageTips('error', message);
                             this.loginOut();
                         }
                     }, function () {

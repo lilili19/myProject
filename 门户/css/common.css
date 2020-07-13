@@ -1,0 +1,169 @@
+/* ---------------------------------------- 信息提示 ----------------------------------------------- */
+.li_messageTips {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999999998;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1), 0px 0px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 20px 50px;
+    border-radius: 5px;
+    animation: li_messageTips 0.3s linear;
+    background-color: white;
+}
+
+@keyframes li_messageTips {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes li_messageTips_time {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.li_messageTips .li_icon_success {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(34, 227, 93);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.li_messageTips .li_icon_success .li_moban {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.li_messageTips .li_icon_success .li_moban>div {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgb(34, 227, 93);
+    animation: li_messageTips_gou 0.9s linear;
+}
+
+@keyframes li_messageTips_gou {
+    0% {
+        left: 0%;
+    }
+
+    33.333% {
+        left: 0%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.li_messageTips .li_icon_error {
+    background-color: rgb(255, 88, 88);
+    overflow: hidden;
+}
+
+.li_messageTips .li_icon_error .li_error {
+    width: 3px;
+    height: 17px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.li_messageTips .li_icon_error .li_error1 {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.li_messageTips .li_icon_error .li_error2 {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.li_messageTips .li_icon_error .li_error_moban {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgb(255, 88, 88);
+}
+
+.li_messageTips .li_icon_error .li_1 {
+    left: 100%;
+    animation: li_messageTips_error1 0.9s linear;
+}
+
+.li_messageTips .li_icon_error .li_2 {
+    right: 100%;
+    animation: li_messageTips_error2 0.6s linear;
+}
+
+@keyframes li_messageTips_error1 {
+    0% {
+        left: 0%;
+    }
+
+    66.66666% {
+        left: 0%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes li_messageTips_error2 {
+    0% {
+        right: 0%;
+    }
+
+    50% {
+        right: 0%;
+    }
+
+    100% {
+        right: 100%;
+    }
+}
+
+.li_icon_info {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #FFAB33;
+    color: white;
+    font-size: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
