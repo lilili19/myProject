@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.bootcss.com/video.js/7.0.0-alpha.1/alt/video-js-cdn.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -27,8 +28,8 @@
         } */
 
         video {
-            max-width: 90%;
-            max-height: 90%;
+            /* max-width: 90%; */
+            /* max-height: 90%; */
             position: relative;
         }
 
@@ -55,29 +56,31 @@
 </head>
 <body>
     <div class="video">
-        <!-- <video src="./video/1.mp4" controls muted></video> -->
+        <!-- <div style="width:90%;height: 90%;display: flex;align-items: center;justify-content: center;"> -->
+            <!-- <video class="video-js vjs-big-play-centered" src="./video/1.mp4" controls muted data-setup="{}"></video> -->
+        <!-- </div> -->
+        
     </div>
     <div class="close" onclick="window.parent.app.isVideo = false"></div>
+    <!-- <script src="https://cdn.bootcss.com/video.js/7.0.0-alpha.1/video.min.js"></script> -->
     <script>
         document.querySelector('.video').innerHTML = '<video src=' + window.parent.app.videoSrc + ' poster="' + window.parent.app.videoImg + '" controls controlslist="nodownload noremoteplayback"></video>';
         document.querySelector('video')['disablePictureInPicture'] = true;
     
-        // document.querySelector('video').onloadedmetadata = function() {
-        //     console.log(this.offsetWidth)
-        //     console.log(this.offsetHeight)
-        //     console.log(document.documentElement.clientHeight)
-        //     const video = this;
-        //     document.querySelector('.close').style.top = (document.documentElement.clientHeight - video.offsetHeight) / 2 + 'px';
-        //     document.querySelector('.close').style.left = document.documentElement.clientWidth / 2 + video.offsetWidth / 2 + 10 + 'px';
-        //     document.querySelector('.close').style.right = 'initial';
-        // }
-        // window.onresize = function() {
-        //     console.log(111)
-        //     const video = document.querySelector('.video');
-        //     document.querySelector('.close').style.top = (document.documentElement.clientHeight - video.offsetHeight) / 2 + 'px';
-        //     document.querySelector('.close').style.left = document.documentElement.clientWidth / 2 + video.offsetWidth / 2 + 10 + 'px';
-        //     document.querySelector('.close').style.right = 'initial';
-        // }
+        function loadedmetadata () {
+            var video = document.querySelector('video');
+            if(video.offsetWidth / video.offsetHeight > document.documentElement.clientWidth / document.documentElement.clientHeight) {
+                video.style.width = '90%';
+                video.style.height = 'auto';
+            } else {
+                video.style.height = '90%';
+                video.style.width = 'auto';
+            }
+            document.querySelector('.close').style.top = (document.documentElement.clientHeight - video.offsetHeight) / 2 + 'px';
+            document.querySelector('.close').style.left = document.documentElement.clientWidth / 2 + video.offsetWidth / 2 + 10 + 'px';
+            document.querySelector('.close').style.right = 'initial';
+        }
+        window.onresize = document.querySelector('video').onloadedmetadata = loadedmetadata;
     </script>
 </body>
 </html>
