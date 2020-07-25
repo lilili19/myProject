@@ -45,7 +45,7 @@
         .li_problem {
             display: flex;
             justify-content: space-between;
-            padding-top: 100px;
+            /* padding-top: 100px; */
         }
 
         .li_problem_left {
@@ -484,9 +484,18 @@
                 <div class="loginOut" v-if="isLoginOut" @click="loginOut" style="height: auto;">退出登录</div>
             </div>
         </header>
+        <!-- 面包屑 -->
+        <p class="width1200" style="font-size: 12px;padding-top: 64px;">
+            <span style="height: 26px;display: flex;align-items: center;">
+                <a href="./index.html" style="color: #333;">首页</a> > <span>
+                    {{businessType != 1 && businessType != 2 ? (detailData.moduleName || '详情') : '更多列表信息'}}
+                </span>
+            </span>
+            
+        </p>
 
         <!-- 内容 -->
-        <div class="li_problem width1200" style="min-height: calc(100% - 140px)" v-if="businessType != 1 && businessType != 2">
+        <div class="li_problem width1200" style="min-height: calc(100% - 230px)" v-if="businessType != 1 && businessType != 2">
             <div class="li_problem_left">
                 <p class="li_problem_title">{{detailData.title || detailData.subjectName || detailData.questionName || detailData.postionName}}</p>
                 <div class="li_problem_left_message">
@@ -593,12 +602,13 @@
         </div>
 
         <!-- 视频 && 图文内容 -->
-        <div class="li_problem width1200 li_img_video" style="min-height: calc(100% - 140px)" v-else>
-            <p style="font-size: 20px;margin-left: 10px;">
-                <!-- {{(detailList[0] || {}).moduleName}} -->
-                更多列表信息
-            </p>
-            <div style="height: auto;flex-direction: row;width: 100%;align-items: flex-end;display: flex;" class="filter">
+        <div class="li_problem width1200 li_img_video" style="min-height: calc(100% - 230px)" v-else>       
+            
+            <div style="height: auto;flex-direction: row;width: 100%;align-items: center;display: flex;" class="filter">
+                <p style="font-size: 20px;margin-left: 10px;">
+                    <!-- {{(detailList[0] || {}).moduleName}} -->
+                    更多列表信息
+                </p>
                 <p style="position: relative;display: flex;align-items: center;">
                     <input type="text" placeholder="请输出过滤名称" v-model="modelTitle" style="height: 32px;" />
                     <button @click="title = modelTitle; currentPage = 1;getData()">确定</button>
@@ -787,7 +797,10 @@
                 typeList: [  // 分类列表
 
                 ],
-                filterSelect: '' // 下拉过滤
+                filterSelect: '', // 下拉过滤
+
+                isTimeOut: true, // 验证码定时器开关
+                timer: null     // 验证码定时器
             },
             computed: {
                 pageTotal() {
@@ -800,24 +813,23 @@
             },
             methods: {
                 // 登录
-                login({ userName, password, email, mobile, captchaCode, type }, callBack) {
+                login({ userName, password, mobile, captchaCode, smsCode, type, loginType }, callBack) {
                     ajaxHttp();
-                    this.$http.post(type == 0 ? urlAll.login : urlAll.register, {
+                    this.$http.post(type != 0 ? urlAll.register : loginType ? urlAll.login : urlAll.mobileLogin, {
                         "password": password, //登录密码
                         "userName": userName,  //用户登录名
                         "captchaKey": this.verCode.captchaKey, //验证码接口返回的captchaKey
-                        "email": email, //验证码接口返回的captchaKey
                         "mobile": mobile, //验证码接口返回的captchaKey
-                        "captchaCode": captchaCode  //验证码图片上的数字
+                        "captchaCode": captchaCode,  //验证码图片上的数字
+                        smsCode
                     }).then((res) => {
                         const { code, data, message } = res.body;
-                        if(code == 200) {
-                            if(type == 0) {
+                        if (code == 200) {
+                            if (type == 0) {
                                 localStorage.setItem('user', JSON.stringify(data));
                                 const { userName } = data || {};
                                 this.userName = userName;
                                 this.showLogin = false;
-                                window.location.reload();
                             } else {
                                 messageTips('success', '注册成功');
                                 // localStorage.setItem('user', JSON.stringify(data));
@@ -849,6 +861,26 @@
                         }
                     }, function () {
                         callBack && callBack('请求失败');
+                    });
+                },
+                // 获取短信验证码
+                async smsCode({ captchaCode, phone }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.smsCode, {
+                        "captchaCode": captchaCode,   //验证码接口返回的captchaKey
+                        "captchaKey": this.verCode.captchaKey,   //验证码图片上的数字
+                        "mobile": phone   //手机号
+                    }).then((res) => {
+                        const { code, data, message } = res.body;
+                        if (code == 200) {
+                            callBack && callBack();
+                        } else {
+                            this.isTimeOut = true;
+                            callBack && callBack(message);
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                        this.isTimeOut = true;
                     });
                 },
                 tabItem(row, index) {

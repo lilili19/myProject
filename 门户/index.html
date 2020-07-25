@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>主页</title>
+    <title>杭州软测中心-软件测试培训|IT教育培训|Python培训|大数据培训|web前端开发|测试开发课程|测试桩开发|接口自动化|UI自动化</title>
+    <meta name="keywords" content="软件测试培训，Python培训，Java培训，大数据培训，IT培训，web前端开发培训，杭州软测中心，杭州软测培训，专业软件测试培训，IT教育，测试开发培训，测试桩开发培训，接口自动化培训，UI自动化培训">
+    <meta name="discription" content="杭州软测中心专注于IT培训与IT产品定制开发，软件测试培训，Python培训，大数据培训，Java培训，web前端开发培训，测试开发培训，是一家专业的“软件测试”技能提升与咨询企业，为梦想者打造蜕变的职场梦">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/common.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -549,6 +551,9 @@
                 current: 0, // banner当前索引
                 timerId: null, // 清除循环标记
 
+                isTimeOut: true, // 验证码定时器开关
+                timer: null     // 验证码定时器
+
             },
             methods: {
                 // 播放视频
@@ -558,15 +563,15 @@
                     this.isVideo = true;
                 },
                 // 登录
-                login({ userName, password, email, mobile, captchaCode, type }, callBack) {
+                login({ userName, password, mobile, captchaCode, smsCode, type, loginType }, callBack) {
                     ajaxHttp();
-                    this.$http.post(type == 0 ? urlAll.login : urlAll.register, {
+                    this.$http.post(type != 0 ? urlAll.register : loginType ? urlAll.login : urlAll.mobileLogin, {
                         "password": password, //登录密码
                         "userName": userName,  //用户登录名
                         "captchaKey": this.verCode.captchaKey, //验证码接口返回的captchaKey
-                        "email": email, //验证码接口返回的captchaKey
                         "mobile": mobile, //验证码接口返回的captchaKey
-                        "captchaCode": captchaCode  //验证码图片上的数字
+                        "captchaCode": captchaCode,  //验证码图片上的数字
+                        smsCode
                     }).then((res) => {
                         const { code, data, message } = res.body;
                         if (code == 200) {
@@ -608,6 +613,27 @@
                         callBack && callBack('请求失败');
                     });
                 },
+                // 获取短信验证码
+                async smsCode({ captchaCode, phone }, callBack) {
+                    ajaxHttp();
+                    await this.$http.post(urlAll.smsCode, {
+                        "captchaCode": captchaCode,   //验证码接口返回的captchaKey
+                        "captchaKey": this.verCode.captchaKey,   //验证码图片上的数字
+                        "mobile": phone   //手机号
+                    }).then((res) => {
+                        const { code, data, message } = res.body;
+                        if (code == 200) {
+                            callBack && callBack();
+                        } else {
+                            this.isTimeOut = true;
+                            callBack && callBack(message);
+                        }
+                    }, function () {
+                        callBack && callBack('请求失败');
+                        this.isTimeOut = true;
+                    });
+                },
+                
                 // 请求模块列表
                 async getModuleList() {
                     ajaxHttp();
@@ -653,10 +679,6 @@
                     });
                     // console.log(this.moduleList);
                     setTimeout(() => {
-                        this.bannerList = (this.moduleList.find(item => item.businessType == 2 && item.orders == 1) || {}).children || [];
-
-                        console.log(this.bannerList)
-
                         this.$set(this.moduleList, 0, this.moduleList[0]);
                         
                         // setTimeout(() => {
@@ -682,6 +704,7 @@
                         const { code, data, message } = res.body;
                         if (code == 200) {
                             callBack && callBack(data);
+                            this.bannerList = (this.moduleList.find(item => item.businessType == 2 && item.orders == 1) || {}).children || [];
                         }
                         if (code == 350) {
                             messageTips('error', message);

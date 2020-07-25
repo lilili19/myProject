@@ -70,7 +70,11 @@ var obj2 = {
     // 15、用户应聘职位 
     acceptPostion: host + '/postionAccept/acceptPostion',
     // 16、查询本人是否应聘过 
-    postionId: host + '/postionAccept/get'
+    postionId: host + '/postionAccept/get',
+    // 18、获取短信验证码
+    smsCode: host + '/user/smsCode',
+    // 手机号登陆
+    mobileLogin: host + '/user/mobileLogin'
 }
 
 
@@ -78,7 +82,8 @@ var urlAll = env === 'test' ? obj1 : obj2;
 
 function ajaxHttp() {
     var user = JSON.parse(localStorage.getItem('user') || '{}');
-    const { token } = user;
+    // const { token } = user;
+    const token = user.token;
     Vue.http.headers.common['Authorization'] = token;
 }
 
